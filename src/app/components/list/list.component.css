@@ -1,0 +1,28 @@
+@media (max-width: 768px) {
+    .list {
+      position: relative;
+      display: block;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: white;
+      width: 100%;
+      height: calc(100vh - 50px);
+    }
+}
+
+@media (min-width: 768px) {
+    .list {
+      position: fixed;
+      top: 50px;
+      bottom: 0;
+      left: 300px;
+      display: block;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: white;
+      border-right: 1px solid #eee;
+      width: 400px;
+    }
+}

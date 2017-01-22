@@ -1,0 +1,18 @@
+/app/components
+
+Main - entry point of the app, doesn't render anything but bootstraps the app
+
+Login - Login page, will use this as a landing page
+
+Private - viewable section of the app after logging in
+
+Navbar - Navbar, called in private, has links to aux routes
+
+Footer - footer, called in private
+
+List - called in private, main listview of todo list, show in aux router of private
+  - render this auxview by default
+
+Sidebar - called in private, left sidebar to show categories
+
+Calendar - called in private, right sidebar to show calendar

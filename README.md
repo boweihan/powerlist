@@ -24,4 +24,3 @@ Tests:
 
 Linting:
 - TSLint
-

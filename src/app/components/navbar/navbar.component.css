@@ -1,0 +1,18 @@
+.navbar {
+    background-color: #2c6bd6;
+    padding: 5px 20vw;
+}
+
+.vs-nav-icon {
+    color: white;
+}
+
+.vs-toggle-icon {
+    color: white;
+    border: 0.5px solid white;
+}
+
+.vs-toggler {
+    margin-right: 5vh;
+    line-height: 28px;
+}
