@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+// authentication
+import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 
 import { AllergyClientRoutingModule } from './app-routing.module';
 
@@ -14,7 +17,12 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoginComponent } from './components/login/login.component';
 import { PrivateComponent } from './components/private/private.component';
 
+
 import 'rxjs/Rx';
+
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp( new AuthConfig({}), http, options);
+}
 
 @NgModule({
   declarations: [
@@ -31,12 +39,18 @@ import 'rxjs/Rx';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AllergyClientRoutingModule
+    AllergyClientRoutingModule,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [ Http, RequestOptions ]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
