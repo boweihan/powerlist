@@ -1,2 +1,13 @@
 <div class="calendar">
+
+  <div class="fullcalendar"></div>
+  
+  <div id="authorize-div" style="display: none">
+    <span>Authorize access to Google Calendar API</span>
+    <button id="authorize-button" (click)="gmailService.handleAuthClick()">
+      Authorize
+    </button>
+  </div>
+  <pre id="output"></pre>
+
 </div>

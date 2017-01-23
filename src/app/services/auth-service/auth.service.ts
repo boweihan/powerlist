@@ -17,7 +17,7 @@ export class AuthService {
       // Add callback for lock `authenticated` event
       this.lock.on("authenticated", (authResult) => {
         localStorage.setItem('id_token', authResult.idToken);
-        // redirect to private page
+        // redirect to private page, after authenticated event;
         this.router.navigateByUrl('/private/(aux:list)');
       });
     }
