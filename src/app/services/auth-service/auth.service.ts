@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { tokenNotExpired } from 'angular2-jwt';
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
 
 // Avoid name not found warnings
@@ -10,15 +10,21 @@ export class AuthService {
 
     // Configure Auth0
     lock = new Auth0Lock('9AX3hBcDf8Hh3tobK2G6t3CYj7T8p7pZ', 'bhan.auth0.com', {});
+    jwtHelper: JwtHelper = new JwtHelper();
 
     constructor(
       private router: Router
     ) {
-      // Add callback for lock `authenticated` event
+      // set lock event listener in constructor
       this.lock.on("authenticated", (authResult) => {
-        localStorage.setItem('id_token', authResult.idToken);
-        // redirect to private page, after authenticated event;
-        this.router.navigateByUrl('/private/(aux:list)');
+        this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
+          if (error) {
+            console.log("error on authentication");
+          }
+          localStorage.setItem("profile", JSON.stringify(profile)); // TODO: store this in user db
+          localStorage.setItem('id_token', authResult.idToken);
+          this.router.navigateByUrl('/private/(aux:list)');
+        });
       });
     }
 
@@ -34,9 +40,7 @@ export class AuthService {
     }
 
     public logout() {
-      // Remove token from localStorage
       localStorage.removeItem('id_token');
-      // redirect to login page
       this.router.navigate(['login']);
     }
 }

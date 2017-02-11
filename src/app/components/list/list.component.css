@@ -26,3 +26,44 @@
       width: 400px;
     }
 }
+
+.vs-list {
+  padding: 5px;
+  margin-bottom: 100px;
+}
+
+.vs-list-item {
+  list-style-type: none;
+  padding: 3px;
+}
+
+.vs-task-circle {
+  margin-right: 20px;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  display: inline-block;
+  position: relative;
+  top: 5px;
+}
+  .vs-task-circle:hover {
+    background-color: black;
+  }
+
+.vs-task-description {
+  border-bottom: 1px solid #f2f2f2;
+  width: calc(100% - 70px);
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.vs-task-input {
+  display: block;
+  width: calc(100% - 40px);
+  text-align: center;
+  position: absolute;
+  bottom: 50px;
+  border: none;
+  border-bottom: 1px solid black;
+}

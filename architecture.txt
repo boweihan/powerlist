@@ -12,7 +12,18 @@ Footer - footer, called in private
 
 List - called in private, main listview of todo list, show in aux router of private
   - render this auxview by default
+  - todos are stored in postgres, referencing users based on auth0 profile information
 
 Sidebar - called in private, left sidebar to show categories
+        - stored in postgres, users can create categories
 
 Calendar - called in private, right sidebar to show calendar
+          - created from user todos on initialization of app
+
+authService - this app leverages auth0, so users log in through auth0 and the JWT is stored in localstorage
+            - The user data is saved into local user database to populate todo list (and authenticate user in my db)
+
+gmailService - ways to talk to gmail API, will use it to import gmail calendar events as TODOs
+
+
+

@@ -1,2 +1,12 @@
 <div class="list">
+  <ul class="vs-list">
+    <li class='vs-list-item' *ngFor="let task of tasks">
+      <div class="vs-task-circle" (click)="removeTask(task);"></div>
+      <span class='vs-task-description'>{{task.title}}</span>
+    </li>
+  </ul>
+  <form (keydown)="addTask(taskInput, $event);">
+      <input #taskInput type="text" class="vs-task-input" placeholder="Add A Task"/>
+      <input class="flatpickr" type="text" placeholder="Schedule"/>
+  </form>
 </div>

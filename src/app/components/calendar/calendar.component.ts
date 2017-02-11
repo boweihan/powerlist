@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GmailService } from '../../services/gmail-service/gmail.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-calendar',
   providers: [GmailService],
@@ -14,7 +16,11 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.gmailService.checkAuth();
+    // this.gmailService.checkAuth();
+    $('.fullcalendar').fullCalendar({
+      header: { center: 'month, agendaWeek, listWeek, agendaDay' },
+      editable: false
+    });
   }
 
 }
