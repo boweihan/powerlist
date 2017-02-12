@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../models/task';
 import { CalendarService } from '../../services/calendar-service/calendar.service';
+import { TaskService } from '../../services/task-service/task.service';
 
 declare var $: any;
 declare var flatpickr: any;
 
 @Component({
   selector: 'app-list',
-  providers: [CalendarService],
+  providers: [CalendarService, TaskService],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
@@ -16,7 +17,8 @@ export class ListComponent implements OnInit {
   tasks = [];
 
   constructor(
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private taskService: TaskService
   ) { }
 
   ngOnInit() {
@@ -28,12 +30,22 @@ export class ListComponent implements OnInit {
       utc: true,
       enableTime: true
     });
+
+    var that = this;
+    $.when(this.taskService.getTasksForUser(localStorage.getItem("user_id"))).done(function (response) {
+      let tasks = JSON.parse(response._body);
+      for (var i = 0; i < tasks.length; i++) {
+        that.tasks.push(tasks[i]);
+        that.calendarService.appendTaskToCalendar(tasks[i]);
+      }
+    });
   }
 
   addTask(taskInput, startDateInput, endDateInput, event) {
     if(event.keyCode == 13 || event.type === "click") {
       if(taskInput.value && startDateInput.value && endDateInput.value) {
-        var task = new Task(1, taskInput.value, "date", false, startDateInput.value, endDateInput.value, null);
+        let task = new Task(null, taskInput.value, "date", false, startDateInput.value, endDateInput.value, null, "category", 1);
+        let newtask = this.taskService.createTask(task);
         this.tasks.push(task);
         this.calendarService.appendTaskToCalendar(task);
         taskInput.value = startDateInput.value = endDateInput.value = null;
@@ -44,6 +56,7 @@ export class ListComponent implements OnInit {
   }
 
   removeTask(task) {
+    this.taskService.deleteTask(task.id); // race condition here between ui and db, maybe change?
     for (var i = 0; i < this.tasks.length; i ++) {
       if (this.tasks[i] === task) {
         this.tasks.splice(i, 1);

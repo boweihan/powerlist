@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.authService.authenticated()) {
-      this.router.navigateByUrl('/private/(aux:list)');
-    }
+    // if (this.authService.authenticated()) {
+    //   this.router.navigateByUrl('/private/(aux:list)');
+    // }
   }
 
 }
