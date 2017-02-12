@@ -5,8 +5,10 @@
       <span class='vs-task-description'>{{task.title}}</span>
     </li>
   </ul>
-  <form (keydown)="addTask(taskInput, $event);">
-      <input #taskInput type="text" class="vs-task-input" placeholder="Add A Task"/>
-      <input class="flatpickr" type="text" placeholder="Schedule"/>
+  <form (keydown)="addTask(taskInput, startDateInput, endDateInput, $event);">
+      <input #taskInput type="text" class="vs-task-input" placeholder="Description"/>
+      <input #startDateInput class="flatpickrStart vs-flatpickr-start" type="text" placeholder="Start Date"/>
+      <input #endDateInput class="flatpickrEnd vs-flatpickr-end" type="text" placeholder="End Date"/>
   </form>
+  <button class='vs-task-button btn btn-lg btn-primary' (click)="addTask(taskInput, startDateInput, endDateInput, $event);"><i class="fa fa-plus" aria-hidden="true"></i></button>
 </div>

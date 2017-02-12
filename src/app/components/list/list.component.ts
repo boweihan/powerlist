@@ -20,17 +20,26 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    flatpickr('.flatpickr', {
+    flatpickr('.flatpickrStart', {
+      utc: true,
+      enableTime: true
+    });
+    flatpickr('.flatpickrEnd', {
+      utc: true,
       enableTime: true
     });
   }
 
-  addTask(taskInput, event) {
-    if(event.keyCode == 13) {
-      var task = new Task(1, taskInput.value, "date", false, (new Date).toISOString(), null, null);
-      this.tasks.push(task);
-      this.calendarService.appendTaskToCalendar(task);
-      taskInput.value = null;
+  addTask(taskInput, startDateInput, endDateInput, event) {
+    if(event.keyCode == 13 || event.type === "click") {
+      if(taskInput.value && startDateInput.value && endDateInput.value) {
+        var task = new Task(1, taskInput.value, "date", false, startDateInput.value, endDateInput.value, null);
+        this.tasks.push(task);
+        this.calendarService.appendTaskToCalendar(task);
+        taskInput.value = startDateInput.value = endDateInput.value = null;
+      } else {
+        alert('please fill out all form fields');
+      }
     }
   }
 

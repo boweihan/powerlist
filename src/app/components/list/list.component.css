@@ -29,7 +29,7 @@
 
 .vs-list {
   padding: 5px;
-  margin-bottom: 100px;
+  margin-bottom: 150px;
 }
 
 .vs-list-item {
@@ -59,11 +59,53 @@
 }
 
 .vs-task-input {
+  position: absolute;
   display: block;
   width: calc(100% - 40px);
+  bottom: 125px;
+  border: 1px solid #f2f2f2;
+  padding: 5px;
+  font-size: 13px;
   text-align: center;
+}
+
+.vs-flatpickr-start {
   position: absolute;
-  bottom: 50px;
+  display: inline-block;
+  text-align: center;
+  width: calc(50% - 20px);
+  bottom: 94px;
+  left: 20px;
+  border: 1px solid #f2f2f2;
+  border-top: none;
+  padding: 5px;
+  font-size: 13px;
+}
+
+.vs-flatpickr-end {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  width: calc(50% - 20px);
+  bottom: 94px;
+  right: 20px;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #f2f2f2;
+  border-right: 1px solid #f2f2f2;
+  padding: 5px;
+  font-size: 13px;
+}
+
+.vs-task-button {
+  position: absolute;
+  display: inline-block;
+  bottom: 59px;
+  left: 20px;
+  width: calc(100% - 40px);
+  background-color: #2c6bd6;
+  border-radius: 0px;
+  padding: 10px;
+  border: none;
+  font-size: 0.8em;
+  font-weight: lighter;
 }

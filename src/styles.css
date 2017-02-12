@@ -3,12 +3,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Arvo', serif;
 }
 
 /* this needs to be here instead of the component.css because it is included after fullcalender.css */
 .fc-toolbar h2 {
   font-size: 1em;
   line-height: 40px;
+  font-weight: 700;
 }
 
 .fc-button {
@@ -19,7 +21,7 @@
 }
 
 .fc-state-active {
-  
+
 }
 
 .fc-today-button {
@@ -31,9 +33,25 @@
 
 .fc-day-header span {
   font-weight: normal;
+  font-size: 0.9em;
 }
 
 hr.fc-divider {
   padding: 0;
   border-top: 1px solid black;
+}
+
+/* position of calendar toggles */
+
+.fc-center {
+  position: absolute;
+  display: block;
+  bottom: 100px;
+  left: 20px;
+  margin: auto;
+  width: calc(100% - 40px);
+}
+
+.fc-center > .fc-button {
+  float: none;
 }

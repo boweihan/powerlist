@@ -18,8 +18,16 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     // this.gmailService.checkAuth();
     $('.fullcalendar').fullCalendar({
-      header: { center: 'month, agendaWeek, listWeek, agendaDay' },
-      editable: false
+      header: { center: 'listDay, listWeek, month' },
+      editable: false,
+      buttonText: {
+                      today: 'today',
+                      month: 'month',
+                      week: 'week',
+                      day: 'day',
+                      listWeek: 'week (list)',
+                      listDay: 'day (list)'
+                  }
     });
   }
 
