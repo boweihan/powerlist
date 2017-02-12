@@ -41,7 +41,7 @@ export class ListComponent implements OnInit {
   addTask(taskInput, startDateInput, endDateInput, event) {
     if(event.keyCode == 13 || event.type === "click") {
       if(taskInput.value && startDateInput.value && endDateInput.value) {
-        let task = new Task(null, taskInput.value, "date", false, startDateInput.value, endDateInput.value, null, "category", 1);
+        let task = new Task(null, taskInput.value, startDateInput.value, endDateInput.value, null, parseInt(localStorage.getItem("selectedCategoryId")), parseInt(localStorage.getItem("user_id"))); // gotta change this to category id
         this.taskService.createTask(task);
         this.tasks.push(task);
         this.calendarService.appendTaskToCalendar(task);

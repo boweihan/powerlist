@@ -1,43 +1,51 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
-import { Task } from '../../models/task';
+import { Category } from '../../models/category';
 
 @Injectable()
-export class TaskService {
+export class CategoryService {
 
   constructor(
     private http: Http
   ) { }
 
-  createTask(Task) {
-    delete Task["id"]
+  createCategory(Category) {
+    delete Category["id"]
     return this.http
-      .post("http://localhost:3000/tasks", Task)
+      .post("http://localhost:3000/categories", Category)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
   }
 
-  getTasks() {
+  getCategoryByName(name) {
     return this.http
-      .get("http://localhost:3000/tasks")
+      .get("http://localhost:3000/find_category?name=" + name)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
   }
 
-  getTasksForUser(user_id) {
+  getCategories() {
     return this.http
-      .get("http://localhost:3000/find_user_tasks?user_id=" + user_id)
+      .get("http://localhost:3000/categories")
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteTask(task_id) {
+  getCategoriesForUser(user_id) {
     return this.http
-      .delete("http://localhost:3000/tasks/" + task_id)
+      .get("http://localhost:3000/find_user_categories?user_id=" + user_id)
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
+  deleteCategory(category_id) {
+    return this.http
+      .delete("http://localhost:3000/categories/" + category_id)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

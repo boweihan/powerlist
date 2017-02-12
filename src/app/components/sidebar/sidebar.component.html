@@ -1,7 +1,11 @@
 <div class="sidebar">
   <ul class="vs-categories">
     <li class='vs-category' *ngFor="let category of categories">
-      <span class='vs-category-description'>{{category}}</span>
+      <span (click)="selectCategory($event)" class='vs-category-description'>{{category.name}}</span>
     </li>
   </ul>
+  <form (keydown)="addCategory(categoryInput, $event);">
+    <i class="fa fa-plus" (click)="addCategory(categoryInput, $event);" aria-hidden="true"></i>
+    <input #categoryInput type="text" class="vs-category-input" placeholder="Category"/>
+  </form>
 </div>
