@@ -3,7 +3,8 @@ import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import { Http, Response } from '@angular/http';
 
-declare var $:any;
+declare var $: any;
+
 // Avoid name not found warnings
 let Auth0Lock = require('auth0-lock').default;
 
@@ -21,46 +22,42 @@ export class AuthService {
       // set lock event listener in constructor
       this.lock.on("authenticated", (authResult) => {
         this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
-          if (error) {
-            console.log("error on authentication");
-          }
-          // localStorage.setItem("username", profile.user_id); // TODO: store this in user db
+          if (error) { console.log("error on authentication"); }
           localStorage.setItem('id_token', authResult.idToken);
-
-          var that = this;
-          // all this navigation needs to be refactored and is probably unecessary because of oninit
-          $.when(this.getUser(profile.user_id)).done(function (response) {
-            if (response._body === "null") {
-              $.when(that.createUser(profile.user_id)).done(function (response) {
-                localStorage.setItem("username", JSON.parse(response._body).username);
-                localStorage.setItem("user_id", JSON.parse(response._body).id);
-                that.router.navigateByUrl('/private/(aux:list)');
-              });
-            } else {
-              localStorage.setItem("username", JSON.parse(response._body).username);
-              localStorage.setItem("user_id", JSON.parse(response._body).id);
-              that.router.navigateByUrl('/private/(aux:list)');
-            }
-          });
+          this.getOrCreateUser(profile);
         });
       });
     }
 
-    public login() {
+    getOrCreateUser(profile) {
+      var that = this;
+      $.when(this.getUser(profile.user_id)).done(function (response) {
+        if (response._body === "null") {
+          $.when(that.createUser(profile.user_id)).done(function (response) {
+            localStorage.setItem("user_id", JSON.parse(response._body).id);
+            that.router.navigateByUrl('/private/(aux:list)');
+          });
+        } else {
+          localStorage.setItem("user_id", JSON.parse(response._body).id);
+          that.router.navigateByUrl('/private/(aux:list)');
+        }
+      });
+    }
+
+    login() {
       // Call the show method to display the widget.
       this.lock.show();
     }
 
-    public authenticated() {
+    authenticated() {
       // Check if there's an unexpired JWT
       // This searches for an item in localStorage with key == 'id_token'
       return tokenNotExpired();
     }
 
-    public logout() {
+    logout() {
       localStorage.removeItem('id_token');
       localStorage.removeItem('user_id');
-      localStorage.removeItem('username');
       this.router.navigate(['login']);
     }
 

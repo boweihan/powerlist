@@ -7,21 +7,19 @@ declare var $: any;
 @Injectable()
 export class GmailService {
 
-  private _readyPromise;
   CLIENT_ID = '817440850730-2huvkm08okd84sqi22kvcnri5kt0f2it.apps.googleusercontent.com';
   SCOPES = ["https://www.googleapis.com/auth/calendar"];
-  that = this;
 
   constructor() {
   }
 
   checkAuth() {
-      gapi.auth.authorize(
-        {
+      gapi.auth.authorize({
           'client_id': this.CLIENT_ID,
           'scope': this.SCOPES.join(' '),
           'immediate': true
-        }, this.handleAuthResult);
+        }, this.handleAuthResult
+      );
   }
 
   handleAuthResult(authResult) {

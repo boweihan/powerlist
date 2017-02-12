@@ -22,15 +22,12 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    flatpickr('.flatpickrStart', {
-      utc: true,
-      enableTime: true
-    });
-    flatpickr('.flatpickrEnd', {
-      utc: true,
-      enableTime: true
-    });
+    flatpickr('.flatpickrStart', { utc: true, enableTime: true });
+    flatpickr('.flatpickrEnd', { utc: true, enableTime: true });
+    this.initializeTasks();
+  }
 
+  initializeTasks() {
     var that = this;
     $.when(this.taskService.getTasksForUser(localStorage.getItem("user_id"))).done(function (response) {
       let tasks = JSON.parse(response._body);
@@ -45,7 +42,7 @@ export class ListComponent implements OnInit {
     if(event.keyCode == 13 || event.type === "click") {
       if(taskInput.value && startDateInput.value && endDateInput.value) {
         let task = new Task(null, taskInput.value, "date", false, startDateInput.value, endDateInput.value, null, "category", 1);
-        let newtask = this.taskService.createTask(task);
+        this.taskService.createTask(task);
         this.tasks.push(task);
         this.calendarService.appendTaskToCalendar(task);
         taskInput.value = startDateInput.value = endDateInput.value = null;

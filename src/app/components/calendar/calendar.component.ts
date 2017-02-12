@@ -20,14 +20,8 @@ export class CalendarComponent implements OnInit {
     $('.fullcalendar').fullCalendar({
       header: { center: 'listDay, listWeek, month' },
       editable: false,
-      buttonText: {
-                      today: 'today',
-                      month: 'month',
-                      week: 'week',
-                      day: 'day',
-                      listWeek: 'week (list)',
-                      listDay: 'day (list)'
-                  }
+      buttonText: { month: 'Month', listWeek: 'Week', listDay: 'Day' },
+      eventColor: '#DB4C3F'
     });
   }
 
