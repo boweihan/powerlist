@@ -10,6 +10,14 @@ export class CategoryService {
     private http: Http
   ) { }
 
+  getCategoryTasks(categoryId) {
+    return this.http
+      .get("http://localhost:3000/get_category_tasks?id=" + categoryId)
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
   createCategory(Category) {
     delete Category["id"]
     return this.http

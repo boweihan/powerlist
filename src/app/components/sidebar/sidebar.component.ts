@@ -48,6 +48,6 @@ export class SidebarComponent implements OnInit {
   selectCategory(event) {
     $.when(this.categoryService.getCategoryByName(event.currentTarget.innerText)).done(function (response) {
       localStorage.setItem("selectedCategoryId", JSON.parse(response._body).id);
-    })
+    });
   }
 }

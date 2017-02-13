@@ -1,4 +1,5 @@
 <div class="sidebar">
+  <div class="vs-home-list js-home-list" (click)="selectCategory($event)">Home</div>
   <ul class="vs-categories">
     <li class='vs-category' *ngFor="let category of categories">
       <span (click)="selectCategory($event)" class='vs-category-description'>{{category.name}}</span>
