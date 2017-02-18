@@ -120,9 +120,11 @@ export class ListComponent implements OnInit {
     if (!category) {
       this.initializeAllTasks(false);
       this.selectedCategoryId = null;
+      $('.js-category-title').text('Home'); // don't hardcode strings, refactor
     } else {
       this.selectedCategoryId = category.id;
       this.initializeCategoryTasks(false);
+      $('.js-category-title').text(category.name);
     }
     // toggle active css
     this.clearActiveCategories();

@@ -20,7 +20,18 @@
 </div>
 
 <div class="list">
-  <ul class="vs-list">
+  <h1 class="vs-category-title js-category-title">Home</h1>
+    <tr style="display:block; border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
+      <td style="height: 100%;"><div class="vs-task-circle" (click)="removeTask(task);"></div></td>
+      <td class='vs-list-item'>
+        <span class='vs-task-description'>
+          <div class="vs-task-title">{{task.title}}</div>
+        </span>
+        <div class="vs-task-start">{{task.start}}</div>
+      </td>
+    </tr>
+  <!-- <ul class="vs-list">
+    <h1 class="categoryTitle" style="text-align: left; font-weight: 700; margin-left: 45px; font-size: 1.3em; color: #2C6BD6;">Home</h1>
     <li class='vs-list-item' *ngFor="let task of tasks">
       <div class="vs-task-circle" (click)="removeTask(task);"></div>
       <span class='vs-task-description'>
@@ -28,7 +39,7 @@
       </span>
       <div class="vs-task-start">{{task.start}}</div>
     </li>
-  </ul>
+  </ul> -->
   <form (keydown)="addTask(taskInput, startDateInput, endDateInput, $event);">
       <input #taskInput type="text" class="vs-task-input" placeholder="Description"/>
       <input #startDateInput class="flatpickrStart vs-flatpickr-start" type="text" placeholder="Start Date"/>

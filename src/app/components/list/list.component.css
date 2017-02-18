@@ -27,14 +27,14 @@
     }
 }
 
+.vs-list-item {
+  width: 100%;
+  padding: 3px;
+}
+
 .vs-list {
   padding: 5px;
   margin-bottom: 150px;
-}
-
-.vs-list-item {
-  list-style-type: none;
-  padding: 3px;
 }
 
 .vs-task-circle {
@@ -52,9 +52,6 @@
   }
 
 .vs-task-description {
-  border-bottom: 1px solid #f2f2f2;
-  width: calc(100% - 70px);
-  display: inline-block;
   padding-bottom: 5px;
 }
 
@@ -70,6 +67,8 @@
 }
 
 .vs-task-title {
+  font-weight: 100;
+  
 }
 
 .vs-task-start {
@@ -163,7 +162,7 @@
     }
 
 .vs-category-description {
-    font-weight: 700;
+    font-weight: 200;
     display: block;
     padding: 5px;
 }
@@ -192,3 +191,14 @@
     .vs-category-input-cancel:hover {
         text-decoration: underline;
     }
+
+.vs-category-title {
+    text-align: left;
+    font-weight: 700;
+    padding-left: 45px;
+    padding-bottom: 20px;
+    font-size: 1.3em;
+    color: #2C6BD6;
+    border-bottom: 2px solid #f2f2f2;
+    margin-bottom: 0;
+}

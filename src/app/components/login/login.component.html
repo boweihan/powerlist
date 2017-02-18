@@ -1,4 +1,5 @@
 <div class="vs-login">
-  <button class="btn btn-primary btn-lg vs-login-button" (click)="authService.login()" *ngIf="!authService.authenticated()">Authenticate with Google</button>
+  <i class="vs-logo fa fa-plug" aria-hidden="true"><span style='font-size: 10vw;'>PowerList</span></i>
+  <button class="btn btn-primary btn-lg vs-login-button" (click)="authService.login()" *ngIf="!authService.authenticated()">Log In or Sign Up</button>
   <button class="btn btn-primary btn-lg vs-login-button" *ngIf="authService.authenticated()"><a style="text-decoration: none;color:white;" href="../private/(aux:list)">Continue to PowerList</a></button>
 </div>
