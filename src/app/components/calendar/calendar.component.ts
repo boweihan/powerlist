@@ -22,7 +22,7 @@ export class CalendarComponent implements OnInit {
       editable: false,
       buttonText: { month: 'Month', listWeek: 'Week', listDay: 'Day' },
       eventColor: '#D84D20',
-      height: "auto"
+      height: "parent"
     });
   }
 }

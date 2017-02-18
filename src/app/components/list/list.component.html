@@ -21,15 +21,17 @@
 
 <div class="list">
   <h1 class="vs-category-title js-category-title">Home</h1>
-  <tr style="display:block; border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
-    <td style="height: 100%;"><div class="vs-task-circle" (click)="removeTask(task);"></div></td>
-    <td class='vs-list-item'>
-      <span class='vs-task-description'>
-        <div class="vs-task-title">{{task.title}}</div>
-      </span>
-      <div class="vs-task-start">{{task.start}}</div>
-    </td>
-  </tr>
+  <div class="vs-list-table">
+    <tr style="display:block; border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
+      <td style="height: 100%;"><div class="vs-task-circle" (click)="removeTask(task);"></div></td>
+      <td class='vs-list-item'>
+        <span class='vs-task-description'>
+          <div class="vs-task-title">{{task.title}}</div>
+        </span>
+        <div class="vs-task-start">{{task.start}}</div>
+      </td>
+    </tr>
+  </div>
   <form (keydown)="addTask(taskInput, startDateInput, endDateInput, $event);">
       <input #taskInput type="text" class="vs-task-input" placeholder="Description"/>
       <input #startDateInput class="flatpickrStart vs-flatpickr-start" type="text" placeholder="Start Date"/>
