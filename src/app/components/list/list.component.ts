@@ -70,7 +70,7 @@ export class ListComponent implements OnInit {
         $.when(this.taskService.createTask(task)).done(function (response) {
           var realTask = JSON.parse(response._body);
           that.tasks.push(realTask);
-          that.calendarService.appendTaskToCalendar(realTask);
+          that.calendarService.appendTaskToCalendar(realTask); // this passes the task ID as the fullcalendarID
           taskInput.value = startDateInput.value = endDateInput.value = null;
         });
       } else {
@@ -81,6 +81,7 @@ export class ListComponent implements OnInit {
 
   removeTask(task) {
     this.taskService.deleteTask(task.id); // race condition here between ui and db, maybe change?
+    this.calendarService.removeTaskFromCalendar(task);
     for (var i = 0; i < this.tasks.length; i ++) {
       if (this.tasks[i] === task) {
         this.tasks.splice(i, 1);

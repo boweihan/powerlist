@@ -10,4 +10,8 @@ export class CalendarService {
   appendTaskToCalendar(task) {
     $('.fullcalendar').fullCalendar('renderEvent', task, true);
   }
+
+  removeTaskFromCalendar(task) {
+    $('.fullcalendar').fullCalendar('removeEvents', task.id);
+  }
 }
