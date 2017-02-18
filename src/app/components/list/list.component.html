@@ -1,20 +1,20 @@
 <div class="sidebar">
   <ul class="vs-categories">
     <li class='vs-category'>
-      <div class="js-category-description vs-category-description" (click)="selectCategory($event)"><i class="fa fa-tag" aria-hidden="true" style="padding-right: 15px;"></i>Home</div>
+      <div class="js-category-description vs-category-description" (click)="selectCategory($event)" style="color: #D84D20;"><i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px;"></i>Home</div>
     </li>
     <li class='vs-category' *ngFor="let category of categories">
       <div (click)="selectCategory($event, category)" class='js-category-description vs-category-description'>
-        <i class="fa fa-tag" aria-hidden="true" style="padding-right: 15px; line-height: 1.5em;"></i>
+        <i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px; line-height: 1.5em;"></i>
         {{category.name}}
         <i class="fa fa-times" aria-hidden="true" (click)="deleteCategory(category, $event);" style="float: right; line-height: 1.5em;"></i>
       </div>
     </li>
   </ul>
-  <form (keydown)="addCategory(categoryInput, $event);" class="js-category-form">
-    <a href="javascript:void(0);"><i class="fa fa-plus" (click)="showCategoryInput();" aria-hidden="true" style='color: #2C6BD6;'></i></a>
+  <form (keydown)="addCategory(categoryInput, $event);" class="js-category-form vs-category-form">
+    <a href="javascript:void(0);"><i class="fa fa-plus" (click)="showCategoryInput();" aria-hidden="true" style='color: #D84D20; padding-left: 20px;'></i></a>
     <a href="javascript:void(0);"><p class="js-category-label vs-category-add" (click)="showCategoryInput();">Add Category</p></a>
-    <input #categoryInput type="text" class="js-category-input vs-category-input" maxlength="18"/> <!-- force max length for now -->
+    <input #categoryInput type="text" class="js-category-input vs-category-input" maxlength="35"/> <!-- force max length for now -->
     <a href="javascript:void(0);" class="js-category-input vs-category-input-cancel" (click)="hideCategoryInput(categoryInput);">cancel</a>
   </form>
 </div>

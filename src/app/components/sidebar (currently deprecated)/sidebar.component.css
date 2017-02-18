@@ -6,8 +6,6 @@
         left: 0;
         display: block;
         padding: 20px;
-        overflow-x: hidden;
-        overflow-y: auto;
         background-color: #f5f5f5;
         border-right: 1px solid #eee;
         width: 300px;
@@ -22,8 +20,6 @@
         left: 0;
         display: block;
         padding: 20px;
-        overflow-x: hidden;
-        overflow-y: auto;
         background-color: #f5f5f5;
         border-right: 1px solid #eee;
         width: 300px;
