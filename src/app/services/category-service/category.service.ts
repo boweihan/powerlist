@@ -10,9 +10,9 @@ export class CategoryService {
     private http: Http
   ) { }
 
-  getCategoryTasks(categoryId) {
+  getCategoryTasks(categoryId) { // move this to task service eventually
     return this.http
-      .get("http://localhost:3000/get_category_tasks?id=" + categoryId)
+      .get("http://localhost:3000/get_category_tasks?category_id=" + categoryId)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

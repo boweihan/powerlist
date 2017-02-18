@@ -1,13 +1,19 @@
 <div class="sidebar">
-  <div class="vs-home-list js-home-list" (click)="selectCategory($event)">Home</div>
+  <div class="vs-category js-home-list" (click)="selectCategory($event)" style="font-weight: 700;"><i class="fa fa-tag" aria-hidden="true" style="padding-right: 15px;"></i>Home</div>
   <ul class="vs-categories">
     <li class='vs-category' *ngFor="let category of categories">
-      <span (click)="selectCategory($event)" class='vs-category-description'>{{category.name}}</span>
+      <span (click)="selectCategory($event, category)" class='vs-category-description'>
+        <i class="fa fa-tag" aria-hidden="true" style="padding-right: 15px;"></i>
+        {{category.name}}
+        <i class="fa fa-times" aria-hidden="true" (click)="deleteCategory(category, $event);" style="float: right;"></i>
+      </span>
     </li>
   </ul>
-  <form (keydown)="addCategory(categoryInput, $event);">
-    <i class="fa fa-plus" (click)="addCategory(categoryInput, $event);" aria-hidden="true"></i>
-    <input #categoryInput type="text" class="vs-category-input" placeholder="Category"/>
+  <form (keydown)="addCategory(categoryInput, $event);" class="js-category-form">
+    <a href="javascript:void(0);"><i class="fa fa-plus" (click)="showCategoryInput();" aria-hidden="true" style='color: #2C6BD6;'></i></a>
+    <a href="javascript:void(0);"><p class="js-category-label vs-category-add" (click)="showCategoryInput();">Add Category</p></a>
+    <input #categoryInput type="text" class="js-category-input vs-category-input"/>
+    <a href="javascript:void(0);" class="js-category-input vs-category-input-cancel" (click)="hideCategoryInput(categoryInput);">cancel</a>
   </form>
 </div>
 

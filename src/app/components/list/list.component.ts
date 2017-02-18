@@ -18,6 +18,7 @@ export class ListComponent implements OnInit {
 
   tasks = [];
   categories = [];
+  selectedCategoryId = null;
 
   constructor(
     private calendarService: CalendarService,
@@ -30,37 +31,32 @@ export class ListComponent implements OnInit {
     flatpickr('.flatpickrEnd', { utc: true, enableTime: true });
 
     this.initializeCategories();
+    this.initializeCategoryTasks(true);
+  }
 
-    // sucks because we're using localstorage so we need this
-    localStorage.removeItem("selectedCategoryId");
-    // worthless logic at the moment
-    let currentCategoryId = localStorage.getItem("selectedCategoryId");
-    if (!currentCategoryId) {
-      this.initializeAllTasks(true);
+  initializeCategoryTasks(firstLoad) {
+    if (!this.selectedCategoryId) {
+      this.initializeAllTasks(firstLoad);
     } else {
-      this.initializeCategoryTasks(currentCategoryId);
+      var that = this;
+      $.when(this.categoryService.getCategoryTasks(this.selectedCategoryId)).done(function (response) {
+        that.tasks.length = 0;
+        let tasks = JSON.parse(response._body);
+        for (var i = 0; i < tasks.length; i++) {
+          that.tasks.push(tasks[i]);
+        }
+      });
     }
   }
 
-  initializeCategoryTasks(categoryId) {
-    var that = this;
-    $.when(this.categoryService.getCategoryTasks(categoryId)).done(function (response) {
-      that.tasks.length = 0;
-      let tasks = JSON.parse(response._body);
-      for (var i = 0; i < tasks.length; i++) {
-        that.tasks.push(tasks[i]);
-      }
-    });
-  }
-
-  initializeAllTasks(firstTime) {
+  initializeAllTasks(firstLoad) {
     var that = this;
     $.when(this.taskService.getTasksForUser(localStorage.getItem("user_id"))).done(function (response) {
       let tasks = JSON.parse(response._body);
       that.tasks.length = 0;
       for (var i = 0; i < tasks.length; i++) {
         that.tasks.push(tasks[i]);
-        if (firstTime) { that.calendarService.appendTaskToCalendar(tasks[i]); }
+        if (firstLoad) { that.calendarService.appendTaskToCalendar(tasks[i]); }
       }
     });
   }
@@ -68,11 +64,14 @@ export class ListComponent implements OnInit {
   addTask(taskInput, startDateInput, endDateInput, event) {
     if(event.keyCode == 13 || event.type === "click") {
       if(taskInput.value && startDateInput.value && endDateInput.value) {
-        let task = new Task(null, taskInput.value, startDateInput.value, endDateInput.value, null, parseInt(localStorage.getItem("selectedCategoryId")), parseInt(localStorage.getItem("user_id"))); // gotta change this to category id
-        this.taskService.createTask(task);
-        this.tasks.push(task);
-        this.calendarService.appendTaskToCalendar(task);
-        taskInput.value = startDateInput.value = endDateInput.value = null;
+        var that = this;
+        let task = new Task(null, taskInput.value, startDateInput.value, endDateInput.value, null, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id"))); // gotta change this to category id
+        $.when(this.taskService.createTask(task)).done(function (response) {
+          var realTask = JSON.parse(response._body);
+          that.tasks.push(realTask);
+          that.calendarService.appendTaskToCalendar(realTask);
+          taskInput.value = startDateInput.value = endDateInput.value = null;
+        });
       } else {
         alert('please fill out all form fields');
       }
@@ -102,25 +101,52 @@ export class ListComponent implements OnInit {
   addCategory(categoryInput, event) {
     if(event.keyCode == 13 || event.type === "click") {
       if(categoryInput.value) {
+        let that = this;
         let category = new Category(null, categoryInput.value, parseInt(localStorage.getItem("user_id")));
-        this.categoryService.createCategory(category);
-        this.categories.push(category);
-        categoryInput.value = null;
+        $.when(this.categoryService.createCategory(category)).done(function (response) {
+          let realCategory = JSON.parse(response._body);
+          that.categories.push(realCategory);
+          that.hideCategoryInput(realCategory);
+        });
       } else {
         alert('Please enter a category');
       }
     }
   }
 
-  selectCategory(event) {
-    var that = this;
-    if (event.currentTarget.innerText === "Home") {
+  selectCategory(event, category) {
+    if (!category) {
       this.initializeAllTasks(false);
+      this.selectedCategoryId = null;
     } else {
-      $.when(this.categoryService.getCategoryByName(event.currentTarget.innerText)).done(function (response) {
-        localStorage.setItem("selectedCategoryId", JSON.parse(response._body).id);
-        that.initializeCategoryTasks(JSON.parse(response._body).id);
-      });
+      this.selectedCategoryId = category.id;
+      this.initializeCategoryTasks(false);
     }
+  }
+
+  deleteCategory(category, event) {
+    event.stopPropagation(); // click event propagation was killing me
+    var response = window.confirm("Are you sure you want to delete category: " + category.name + "?");
+    if (response) {
+      var that = this;
+      if (category.id === this.selectedCategoryId) { this.selectedCategoryId = null; } // if you delete current category
+      $.when(this.categoryService.deleteCategory(category.id)).done(function (response) {
+        for (var i = 0; i < that.categories.length; i++) {
+          if (that.categories[i] === category) { that.categories.splice(i, 1); }
+        }
+        that.initializeCategoryTasks(false);
+      })
+    }
+  }
+
+  showCategoryInput() {
+    $('.js-category-label').hide();
+    $('.js-category-input').show();
+  }
+
+  hideCategoryInput(categoryInput) {
+    categoryInput.value = null;
+    $('.js-category-input').hide();
+    $('.js-category-label').show();
   }
 }
