@@ -1,3 +1,23 @@
+@media (max-width: 768px) {
+    .vs-logo {
+        font-size: 30vw;
+        color: white;
+        margin-top: 20vh;
+        margin-left: 10vw;
+        display: inline-block;
+    }
+}
+
+@media (min-width: 768px) {
+    .vs-logo {
+        font-size: 30vw;
+        color: white;
+        margin-top: 10vh;
+        margin-left: 10vw;
+        display: inline-block;
+    }
+}
+
 .vs-login {
     /*background-image: url('../../../assets/powerlist.jpg');*/
     background-color: #D84D20;
@@ -8,14 +28,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-}
-
-.vs-logo {
-    font-size: 30vw;
-    color: white;
-    margin-top: 20vh;
-    margin-left: 10vw;
-    display: inline-block;
+    overflow: scroll;
 }
 
 .vs-login-button {
@@ -23,6 +36,7 @@
     text-align: center;
     margin: auto;
     margin-top: 5vh;
+    margin-bottom: 50px;
     border-radius: 5px;
     font-weight: 200;
     border: none;
@@ -34,4 +48,11 @@
     background-color: #D84D20;
     color: white;
     font-weight: 700;
+}
+
+.vs-site-description {
+    margin-left: 30vw;
+    font-size: 2vh;
+    display: block;
+    margin-right: 50px;
 }
