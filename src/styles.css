@@ -43,15 +43,59 @@ hr.fc-divider {
 
 /* position of calendar toggles */
 
-.fc-center {
-  position: absolute;
-  display: block;
-  bottom: 100px;
-  left: 20px;
-  margin: auto;
-  width: calc(100% - 40px);
+@media (max-width: 768px) {
+    .fc-center {
+        position: absolute;
+        display: block;
+        bottom: 50px;
+        left: 20px;
+        margin: auto;
+        width: calc(100% - 40px);
+    }
+}
+
+@media (min-width: 768px) {
+    .fc-center {
+        position: absolute;
+        display: block;
+        bottom: 100px;
+        left: 20px;
+        margin: auto;
+        width: calc(100% - 40px);
+    }
 }
 
 .fc-center > .fc-button {
-  float: none;
+    float: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+.vs-flatpickr-start {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  width: calc(50% - 20px);
+  bottom: 94px;
+  left: 20px;
+  border: 1px solid #f2f2f2;
+  border-top: none;
+  padding: 5px;
+  font-size: 13px;
+}
+
+.vs-flatpickr-end {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  width: calc(50% - 20px);
+  bottom: 94px;
+  right: 20px;
+  border: none;
+  border-bottom: 1px solid #f2f2f2;
+  border-right: 1px solid #f2f2f2;
+  padding: 5px;
+  font-size: 13px;
 }

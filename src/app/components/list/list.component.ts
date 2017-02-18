@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
     flatpickr('.flatpickrStart', { utc: true, enableTime: true });
     flatpickr('.flatpickrEnd', { utc: true, enableTime: true });
 
-    $('.js-category-description').toggleClass('active'); // there will only be 1, the home category
+    $('.js-category-description').toggleClass('active'); // activate home category
     this.initializeCategories();
     this.initializeCategoryTasks(true);
   }

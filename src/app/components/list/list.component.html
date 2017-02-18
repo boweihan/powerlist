@@ -14,7 +14,7 @@
   <form (keydown)="addCategory(categoryInput, $event);" class="js-category-form">
     <a href="javascript:void(0);"><i class="fa fa-plus" (click)="showCategoryInput();" aria-hidden="true" style='color: #2C6BD6;'></i></a>
     <a href="javascript:void(0);"><p class="js-category-label vs-category-add" (click)="showCategoryInput();">Add Category</p></a>
-    <input #categoryInput type="text" class="js-category-input vs-category-input"/>
+    <input #categoryInput type="text" class="js-category-input vs-category-input" maxlength="18"/> <!-- force max length for now -->
     <a href="javascript:void(0);" class="js-category-input vs-category-input-cancel" (click)="hideCategoryInput(categoryInput);">cancel</a>
   </form>
 </div>
