@@ -69,6 +69,20 @@
   text-align: center;
 }
 
+.vs-task-title {
+}
+
+.vs-task-start {
+  margin: 0;
+  font-size: 0.5em;
+  font-weight: 100;
+  font-style: italic;
+  display: block;
+  position: relative;
+  text-align: left;
+  margin-left: 50px;
+}
+
 .vs-flatpickr-start {
   position: absolute;
   display: inline-block;
@@ -139,16 +153,20 @@
 }
 
 .vs-category {
-    padding: 5px;
+    padding: 0px;
 }
     .vs-category:hover {
         background-color: white;
         cursor: pointer;
     }
+    .sidebar .active {
+        background-color: white;
+    }
 
 .vs-category-description {
     font-weight: 700;
     display: block;
+    padding: 5px;
 }
 
 .js-category-form {

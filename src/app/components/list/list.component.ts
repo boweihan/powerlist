@@ -30,6 +30,7 @@ export class ListComponent implements OnInit {
     flatpickr('.flatpickrStart', { utc: true, enableTime: true });
     flatpickr('.flatpickrEnd', { utc: true, enableTime: true });
 
+    $('.js-category-description').toggleClass('active'); // there will only be 1, the home category
     this.initializeCategories();
     this.initializeCategoryTasks(true);
   }
@@ -122,6 +123,9 @@ export class ListComponent implements OnInit {
       this.selectedCategoryId = category.id;
       this.initializeCategoryTasks(false);
     }
+    // toggle active css
+    this.clearActiveCategories();
+    $(event.currentTarget).addClass('active');
   }
 
   deleteCategory(category, event) {
@@ -148,5 +152,14 @@ export class ListComponent implements OnInit {
     categoryInput.value = null;
     $('.js-category-input').hide();
     $('.js-category-label').show();
+  }
+
+  clearActiveCategories() {
+    var categoryElements = $('.js-category-description');
+    for (var i = 0; i < categoryElements.length; i++) {
+      if ($(categoryElements[i]).hasClass('active')) {
+        $(categoryElements[i]).removeClass('active');
+      }
+    }
   }
 }
