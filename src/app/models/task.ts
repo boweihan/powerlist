@@ -2,6 +2,7 @@ export class Task {
   constructor(
       public id: number,
       public title: string,
+      public tip: string,
       public start: string,
       public end: string,
       public url: string,

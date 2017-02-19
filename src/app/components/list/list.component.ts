@@ -69,7 +69,7 @@ export class ListComponent implements OnInit {
         var that = this;
         let backgroundColor = this.colors[Math.floor(Math.random() * 5)];
         let url = null; // placeholder
-        let task = new Task(null, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
+        let task = new Task(null, taskInput.value, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
         $.when(this.taskService.createTask(task)).done(function (response) {
           var realTask = JSON.parse(response._body);
           that.tasks.push(realTask);

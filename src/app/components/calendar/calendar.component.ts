@@ -22,7 +22,12 @@ export class CalendarComponent implements OnInit {
       editable: false,
       buttonText: { month: 'Month', listWeek: 'Week', listDay: 'Day' },
       eventColor: '#f5f5f5',
-      height: "parent"
+      height: "parent",
+      eventAfterRender: function(event, element, view) {
+          element.attr('data-toggle', 'tooltip');
+          element.attr('title', event.tip);
+          element.tooltip();
+      }
     });
   }
 }

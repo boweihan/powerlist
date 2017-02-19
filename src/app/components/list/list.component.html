@@ -28,7 +28,7 @@
         <span class='vs-task-description'>
           <div class="vs-task-title">{{task.title}}</div>
         </span>
-        <div class="vs-task-start">{{task.start}}</div>
+        <div class="vs-task-start">{{task.start | date}}</div> <!-- omg angular pipes are fucking amazing -->
       </td>
     </tr>
   </div>
