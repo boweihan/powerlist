@@ -7,6 +7,7 @@ import { CategoryService } from '../../services/category-service/category.servic
 
 declare var $: any;
 declare var flatpickr: any;
+declare var bootbox: any;
 
 @Component({
   selector: 'app-list',
@@ -19,7 +20,7 @@ export class ListComponent implements OnInit {
   tasks = [];
   categories = [];
   selectedCategoryId = null;
-  colors = ['#f5cbbc', '#ccccff', '#b3ffb3', '#ffffb3', '#ffb3ff']
+  colors = ['#f5cbbc', '#ccccff', '#b3ffb3', '#ffffb3']
 
   constructor(
     private calendarService: CalendarService,
@@ -77,7 +78,7 @@ export class ListComponent implements OnInit {
           taskInput.value = startDateInput.value = endDateInput.value = null;
         });
       } else {
-        alert('please fill out all form fields');
+        bootbox.alert('please fill out all form fields');
       }
     }
   }
@@ -115,7 +116,7 @@ export class ListComponent implements OnInit {
           categoryInput.value = null;
         });
       } else {
-        alert('Please enter a category');
+        bootbox.alert('Please enter a category');
       }
     }
   }
@@ -137,17 +138,18 @@ export class ListComponent implements OnInit {
 
   deleteCategory(category, event) {
     event.stopPropagation(); // click event propagation was killing me
-    var response = window.confirm("Are you sure you want to delete category: " + category.name + "?");
-    if (response) {
-      var that = this;
-      if (category.id === this.selectedCategoryId) { this.selectedCategoryId = null; } // if you delete current category
-      $.when(this.categoryService.deleteCategory(category.id)).done(function (response) {
-        for (var i = 0; i < that.categories.length; i++) {
-          if (that.categories[i] === category) { that.categories.splice(i, 1); }
-        }
-        that.initializeCategoryTasks(false);
-      })
-    }
+    var that = this;
+    bootbox.confirm("Are you sure you want to delete category: " + category.name + "?", function(response) {
+      if (response) {
+        if (category.id === that.selectedCategoryId) { that.selectedCategoryId = null; } // if you delete current category
+        $.when(that.categoryService.deleteCategory(category.id)).done(function (response) {
+          for (var i = 0; i < that.categories.length; i++) {
+            if (that.categories[i] === category) { that.categories.splice(i, 1); }
+          }
+          that.initializeCategoryTasks(false);
+        })
+      }
+    });
   }
 
   showCategoryInput() {

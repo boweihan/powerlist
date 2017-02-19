@@ -11,7 +11,7 @@ import { AllergyClientRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/main/app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+// import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ListComponent } from './components/list/list.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoginComponent } from './components/login/login.component';
