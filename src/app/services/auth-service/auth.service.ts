@@ -64,7 +64,7 @@ export class AuthService {
 
     getUser(username) {
       return this.http
-        .get("http://localhost:3000/find_user?username=" + username)
+        .get("https://calm-inlet-47809.herokuapp.com/find_user?username=" + username)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -72,7 +72,7 @@ export class AuthService {
 
     createUser(username) {
       return this.http
-        .post("http://localhost:3000/users", { username: username })
+        .post("https://calm-inlet-47809.herokuapp.com/users", { username: username })
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -80,7 +80,7 @@ export class AuthService {
 
     getTasks() {
       return this.http
-        .get("http://localhost:3000/users")
+        .get("https://calm-inlet-47809.herokuapp.com/users")
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);

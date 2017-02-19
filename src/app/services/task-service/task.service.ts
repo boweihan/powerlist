@@ -13,7 +13,7 @@ export class TaskService {
   createTask(Task) {
     delete Task["id"]
     return this.http
-      .post("http://localhost:3000/tasks", Task)
+      .post("https://calm-inlet-47809.herokuapp.com/tasks", Task)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -21,7 +21,7 @@ export class TaskService {
 
   getTasks() {
     return this.http
-      .get("http://localhost:3000/tasks")
+      .get("https://calm-inlet-47809.herokuapp.com/tasks")
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -29,7 +29,7 @@ export class TaskService {
 
   getTasksForUser(user_id) {
     return this.http
-      .get("http://localhost:3000/find_user_tasks?user_id=" + user_id)
+      .get("https://calm-inlet-47809.herokuapp.com/find_user_tasks?user_id=" + user_id)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -37,7 +37,7 @@ export class TaskService {
 
   deleteTask(task_id) {
     return this.http
-      .delete("http://localhost:3000/tasks/" + task_id)
+      .delete("https://calm-inlet-47809.herokuapp.com/tasks/" + task_id)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

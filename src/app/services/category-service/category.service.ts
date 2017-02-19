@@ -12,7 +12,7 @@ export class CategoryService {
 
   getCategoryTasks(categoryId) { // move this to task service eventually
     return this.http
-      .get("http://localhost:3000/get_category_tasks?category_id=" + categoryId)
+      .get("https://calm-inlet-47809.herokuapp.com/get_category_tasks?category_id=" + categoryId)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -21,7 +21,7 @@ export class CategoryService {
   createCategory(Category) {
     delete Category["id"]
     return this.http
-      .post("http://localhost:3000/categories", Category)
+      .post("https://calm-inlet-47809.herokuapp.com/categories", Category)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -29,7 +29,7 @@ export class CategoryService {
 
   getCategoryByName(name) {
     return this.http
-      .get("http://localhost:3000/find_category?name=" + name)
+      .get("https://calm-inlet-47809.herokuapp.com/find_category?name=" + name)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -37,7 +37,7 @@ export class CategoryService {
 
   getCategories() {
     return this.http
-      .get("http://localhost:3000/categories")
+      .get("https://calm-inlet-47809.herokuapp.com/categories")
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -45,7 +45,7 @@ export class CategoryService {
 
   getCategoriesForUser(user_id) {
     return this.http
-      .get("http://localhost:3000/find_user_categories?user_id=" + user_id)
+      .get("https://calm-inlet-47809.herokuapp.com/find_user_categories?user_id=" + user_id)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -53,7 +53,7 @@ export class CategoryService {
 
   deleteCategory(category_id) {
     return this.http
-      .delete("http://localhost:3000/categories/" + category_id)
+      .delete("https://calm-inlet-47809.herokuapp.com/categories/" + category_id)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
