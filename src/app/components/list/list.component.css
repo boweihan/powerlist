@@ -236,3 +236,9 @@
     max-height: calc(100vh - 300px);
     overflow: scroll;
 }
+
+.vs-overdue {
+    color: red;
+    font-weight: 700;
+    padding-left: 10px;
+}

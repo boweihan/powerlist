@@ -46,6 +46,9 @@ export class ListComponent implements OnInit {
         that.tasks.length = 0;
         let tasks = JSON.parse(response._body);
         for (var i = 0; i < tasks.length; i++) {
+          if (Date.parse(tasks[i].end) < new Date().getTime()) { // add overdue marker
+            tasks[i].overdue = true;
+          }
           that.tasks.push(tasks[i]);
         }
       });
@@ -58,6 +61,9 @@ export class ListComponent implements OnInit {
       let tasks = JSON.parse(response._body);
       that.tasks.length = 0;
       for (var i = 0; i < tasks.length; i++) {
+        if (Date.parse(tasks[i].end) < new Date().getTime()) { // add overdue marker
+          tasks[i].overdue = true;
+        }
         that.tasks.push(tasks[i]);
         if (firstLoad) { that.calendarService.appendTaskToCalendar(tasks[i]); }
       }
@@ -73,12 +79,15 @@ export class ListComponent implements OnInit {
         let task = new Task(null, taskInput.value, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
         $.when(this.taskService.createTask(task)).done(function (response) {
           var realTask = JSON.parse(response._body);
+          if (Date.parse(realTask.end) < new Date().getTime()) { // add overdue marker
+            realTask.overdue = true;
+          }
           that.tasks.push(realTask);
           that.calendarService.appendTaskToCalendar(realTask); // this passes the task ID as the fullcalendarID
           taskInput.value = startDateInput.value = endDateInput.value = null;
         });
       } else {
-        bootbox.alert('please fill out all form fields');
+        bootbox.alert('Please fill out all form fields.');
       }
     }
   }
@@ -116,7 +125,7 @@ export class ListComponent implements OnInit {
           categoryInput.value = null;
         });
       } else {
-        bootbox.alert('Please enter a category');
+        bootbox.alert('Please enter a category.');
       }
     }
   }
@@ -155,6 +164,7 @@ export class ListComponent implements OnInit {
   showCategoryInput() {
     $('.js-category-label').hide();
     $('.js-category-input').show();
+    $('input.js-category-input').focus();
   }
 
   hideCategoryInput(categoryInput) {
