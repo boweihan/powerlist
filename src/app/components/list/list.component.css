@@ -241,4 +241,6 @@
     color: red;
     font-weight: 700;
     padding-left: 10px;
+    font-style: italic;
+    font-size: 0.8em;
 }

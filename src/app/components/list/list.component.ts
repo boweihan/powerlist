@@ -49,7 +49,7 @@ export class ListComponent implements OnInit {
           if (Date.parse(tasks[i].end) < new Date().getTime()) { // add overdue marker
             tasks[i].overdue = true;
           }
-          that.tasks.push(tasks[i]);
+          that.insertIntoTasksObject(tasks[i]);
         }
       });
     }
@@ -64,7 +64,7 @@ export class ListComponent implements OnInit {
         if (Date.parse(tasks[i].end) < new Date().getTime()) { // add overdue marker
           tasks[i].overdue = true;
         }
-        that.tasks.push(tasks[i]);
+        that.insertIntoTasksObject(tasks[i]);
         if (firstLoad) { that.calendarService.appendTaskToCalendar(tasks[i]); }
       }
     });
@@ -75,7 +75,7 @@ export class ListComponent implements OnInit {
       if(taskInput.value && startDateInput.value && endDateInput.value) {
         if (Date.parse(startDateInput.value) < Date.parse(endDateInput.value)) {
           var that = this;
-          let backgroundColor = this.colors[Math.floor(Math.random() * 5)];
+          let backgroundColor = this.colors[Math.floor(Math.random() * 4)];
           let url = null; // placeholder
           let task = new Task(null, taskInput.value, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
           $.when(this.taskService.createTask(task)).done(function (response) {
@@ -83,7 +83,7 @@ export class ListComponent implements OnInit {
             if (Date.parse(realTask.end) < new Date().getTime()) { // add overdue marker
               realTask.overdue = true;
             }
-            that.tasks.push(realTask);
+            that.insertIntoTasksObject(realTask);
             that.calendarService.appendTaskToCalendar(realTask); // this passes the task ID as the fullcalendarID
             taskInput.value = startDateInput.value = endDateInput.value = null;
           });
@@ -92,6 +92,23 @@ export class ListComponent implements OnInit {
         }
       } else {
         bootbox.alert('Please fill out all form fields.');
+      }
+    }
+  }
+
+  insertIntoTasksObject(task) { // refactor this later
+    let afterPrevious, beforeNext;
+    let currentNumTasks = this.tasks.length;
+    for (var i = 0; i <= currentNumTasks; i++) {
+      if (this.tasks[i]) {
+          afterPrevious = Date.parse(this.tasks[i].end) > Date.parse(task.end);
+      }
+      if (this.tasks[i+1]) {
+          beforeNext = Date.parse(this.tasks[i+1].end) > Date.parse(task.end);
+      }
+      if ((afterPrevious || i === this.tasks.length) && (beforeNext || i === this.tasks.length)) {
+        this.tasks.splice(i, 0, task);
+        break; // only insert 1 task
       }
     }
   }
