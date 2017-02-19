@@ -21,7 +21,7 @@ export class CalendarComponent implements OnInit {
       header: { center: 'listDay, listWeek, month' },
       editable: false,
       buttonText: { month: 'Month', listWeek: 'Week', listDay: 'Day' },
-      eventColor: '#D84D20',
+      eventColor: '#f5f5f5',
       height: "parent"
     });
   }

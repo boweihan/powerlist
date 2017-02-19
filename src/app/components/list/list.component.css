@@ -98,7 +98,8 @@
   bottom: 59px;
   left: 20px;
   width: calc(100% - 40px);
-  background-color: #2c6bd6;
+  /*background-color: #2c6bd6;*/
+  background-color: #D84D20;
   border-radius: 0px;
   padding: 10px;
   border: none;
@@ -122,7 +123,6 @@
     }
     .vs-category-form {
         padding: 5px;
-        margin-left: 20px;
         margin-top: 10px;
     }
     .vs-categories {
@@ -173,7 +173,6 @@
     }
     .vs-category-form {
         padding: 5px;
-        margin-left: 20px;
         margin-top: 10px;
     }
     .vs-categories {
@@ -214,7 +213,7 @@
 .vs-category-input-cancel {
     display: none;
     color: black;
-    margin-left: 30px;
+    margin-left: 50px;
     font-weight: 100;
 }
     .vs-category-input-cancel:hover {
@@ -227,7 +226,8 @@
     padding-left: 45px;
     padding-bottom: 20px;
     font-size: 1.3em;
-    color: #D84D20;
+    /*color: #D84D20;*/
+    color: black;
     border-bottom: 2px solid #f2f2f2;
     margin-bottom: 0;
 }

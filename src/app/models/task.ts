@@ -6,6 +6,8 @@ export class Task {
       public end: string,
       public url: string,
       public category_id: number,
-      public user_id: number
+      public user_id: number,
+      public backgroundColor: string,
+      public overdue: boolean
   ) { }
 }

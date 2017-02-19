@@ -1,7 +1,7 @@
 <div class="sidebar">
   <ul class="vs-categories">
     <li class='vs-category'>
-      <div class="js-category-description vs-category-description" (click)="selectCategory($event)" style="color: #D84D20;"><i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px;"></i>Home</div>
+      <div class="js-category-description vs-category-description" (click)="selectCategory($event)" style="color: black;"><i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px;"></i>Home</div>
     </li>
     <li class='vs-category' *ngFor="let category of categories">
       <div (click)="selectCategory($event, category)" class='js-category-description vs-category-description'>

@@ -19,6 +19,7 @@ export class ListComponent implements OnInit {
   tasks = [];
   categories = [];
   selectedCategoryId = null;
+  colors = ['#f5cbbc', '#ccccff', '#b3ffb3', '#ffffb3', '#ffb3ff']
 
   constructor(
     private calendarService: CalendarService,
@@ -66,7 +67,9 @@ export class ListComponent implements OnInit {
     if(event.keyCode == 13 || event.type === "click") {
       if(taskInput.value && startDateInput.value && endDateInput.value) {
         var that = this;
-        let task = new Task(null, taskInput.value, startDateInput.value, endDateInput.value, null, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id"))); // gotta change this to category id
+        let backgroundColor = this.colors[Math.floor(Math.random() * 5)];
+        let url = null; // placeholder
+        let task = new Task(null, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
         $.when(this.taskService.createTask(task)).done(function (response) {
           var realTask = JSON.parse(response._body);
           that.tasks.push(realTask);
@@ -109,6 +112,7 @@ export class ListComponent implements OnInit {
           let realCategory = JSON.parse(response._body);
           that.categories.push(realCategory);
           that.hideCategoryInput(realCategory);
+          categoryInput.value = null;
         });
       } else {
         alert('Please enter a category');
