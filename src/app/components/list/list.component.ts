@@ -73,19 +73,23 @@ export class ListComponent implements OnInit {
   addTask(taskInput, startDateInput, endDateInput, event) {
     if(event.keyCode == 13 || event.type === "click") {
       if(taskInput.value && startDateInput.value && endDateInput.value) {
-        var that = this;
-        let backgroundColor = this.colors[Math.floor(Math.random() * 5)];
-        let url = null; // placeholder
-        let task = new Task(null, taskInput.value, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
-        $.when(this.taskService.createTask(task)).done(function (response) {
-          var realTask = JSON.parse(response._body);
-          if (Date.parse(realTask.end) < new Date().getTime()) { // add overdue marker
-            realTask.overdue = true;
-          }
-          that.tasks.push(realTask);
-          that.calendarService.appendTaskToCalendar(realTask); // this passes the task ID as the fullcalendarID
-          taskInput.value = startDateInput.value = endDateInput.value = null;
-        });
+        if (Date.parse(startDateInput.value) < Date.parse(endDateInput.value)) {
+          var that = this;
+          let backgroundColor = this.colors[Math.floor(Math.random() * 5)];
+          let url = null; // placeholder
+          let task = new Task(null, taskInput.value, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
+          $.when(this.taskService.createTask(task)).done(function (response) {
+            var realTask = JSON.parse(response._body);
+            if (Date.parse(realTask.end) < new Date().getTime()) { // add overdue marker
+              realTask.overdue = true;
+            }
+            that.tasks.push(realTask);
+            that.calendarService.appendTaskToCalendar(realTask); // this passes the task ID as the fullcalendarID
+            taskInput.value = startDateInput.value = endDateInput.value = null;
+          });
+        } else {
+          bootbox.alert("Task start date can't be after the end date!");
+        }
       } else {
         bootbox.alert('Please fill out all form fields.');
       }
