@@ -32,7 +32,7 @@
         "../node_modules/moment/min/moment.min.js",
         "../node_modules/fullcalendar/dist/fullcalendar.min.js",
         "../node_modules/fullcalendar/dist/gcal.min.js",
-        "../node_modules/bootbox/bootbox.min.js",
+        "../node_modules/bootbox/bootbox.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",
