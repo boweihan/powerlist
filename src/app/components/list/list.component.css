@@ -39,8 +39,8 @@
 }
 
 .vs-list-item {
-  width: 100%;
-  padding: 3px;
+  width: calc(100% - 100px);
+  padding: 8px 3px;
 }
 
 .vs-list {
@@ -54,9 +54,6 @@
   width: 20px;
   height: 20px;
   border: 2px solid #f3f3f3;
-  display: inline-block;
-  position: relative;
-  top: 5px;
 }
   .vs-task-circle:hover {
     background-color: black;
@@ -79,18 +76,14 @@
 
 .vs-task-title {
   font-weight: 100;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .vs-task-start {
-  margin: 0;
-  font-size: 0.5em;
-  font-weight: 100;
-  display: block;
-  position: relative;
-  text-align: left;
-  margin-left: 50px;
-  margin-top: 10px;
+  width: 70px;
+  height: 100%;
+  font-size: 0.8em;
+  text-align: center;
 }
 
 .vs-task-button {
@@ -224,7 +217,7 @@
 .vs-category-title {
     text-align: left;
     font-weight: 700;
-    padding-left: 45px;
+    padding-left: 20px;
     padding-bottom: 20px;
     font-size: 1.3em;
     /*color: #D84D20;*/
@@ -235,7 +228,6 @@
 
 .vs-list-table {
     max-height: calc(100vh - 300px);
-    overflow: scroll;
 }
 
 .vs-overdue {

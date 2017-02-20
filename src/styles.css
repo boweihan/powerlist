@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arvo', serif;
+  font-family: 'Exo 2', 'Merriweather', 'Arvo', serif;
 }
 
 /* this needs to be here instead of the component.css because it is included after fullcalender.css */

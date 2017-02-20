@@ -22,15 +22,15 @@
 <div class="list">
   <h1 class="vs-category-title js-category-title">Home</h1>
   <div class="vs-list-table">
-    <table style='width: 100%;'>
-      <tr style="display:block; border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
+    <table style='width: 100%;height:0;'>
+      <tr style="border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
         <td style="height: 100%;"><div class="vs-task-circle" (click)="removeTask(task);"></div></td>
         <td class='vs-list-item'>
           <span class='vs-task-description'>
             <div class="vs-task-title">{{task.title}}<span class="vs-overdue" *ngIf="task.overdue">(overdue)</span></div>
           </span>
-          <div class="vs-task-start">{{task.start | date:'mediumDate'}}, {{task.start | date:'shortTime'}} ------> {{task.end | date:'mediumDate'}}, {{task.end | date:'shortTime'}}</div> <!-- omg angular pipes are fucking amazing -->
         </td>
+        <td class='vs-task-start'>{{task.start | date:'MMM dd'}}</td>
       </tr>
     </table>
   </div>
