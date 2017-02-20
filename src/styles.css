@@ -5,7 +5,10 @@
   box-sizing: border-box;
   font-family: 'Exo 2', 'Merriweather', 'Arvo', serif;
 }
-
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
 /* this needs to be here instead of the component.css because it is included after fullcalender.css */
 .fc-toolbar h2 {
   font-size: 1em;
