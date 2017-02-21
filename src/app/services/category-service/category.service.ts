@@ -10,9 +10,9 @@ export class CategoryService {
     private http: Http
   ) { }
 
-  getCategoryTasks(categoryId) { // move this to task service eventually
+  getCategoryTasks(category_id) { // move this to task service eventually
     return this.http
-      .get("https://calm-inlet-47809.herokuapp.com/get_category_tasks?category_id=" + categoryId)
+      .get("https://calm-inlet-47809.herokuapp.com/get_category_tasks?category_id=" + category_id)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -54,6 +54,14 @@ export class CategoryService {
   deleteCategory(category_id) {
     return this.http
       .delete("https://calm-inlet-47809.herokuapp.com/categories/" + category_id)
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
+  updateCategory(category_id, params) {
+    return this.http
+      .patch("https://calm-inlet-47809.herokuapp.com/categories/" + category_id, params)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

@@ -46,7 +46,9 @@ export class ListComponent implements OnInit {
         that.tasks.length = 0;
         let tasks = JSON.parse(response._body);
         for (var i = 0; i < tasks.length; i++) {
-          if (Date.parse(tasks[i].end) < new Date().getTime()) { // add overdue marker
+          var date = new Date();
+          var offsetInMillis = date.getTimezoneOffset()*60*1000;
+          if (Date.parse(tasks[i].end) < (date.getTime() - offsetInMillis)) { // add overdue marker
             tasks[i].overdue = true;
           }
           that.insertIntoTasksObject(tasks[i]);
@@ -61,7 +63,9 @@ export class ListComponent implements OnInit {
       let tasks = JSON.parse(response._body);
       that.tasks.length = 0;
       for (var i = 0; i < tasks.length; i++) {
-        if (Date.parse(tasks[i].end) < new Date().getTime()) { // add overdue marker
+        var date = new Date();
+        var offsetInMillis = date.getTimezoneOffset()*60*1000;
+        if (Date.parse(tasks[i].end) < (date.getTime() - offsetInMillis)) { // add overdue marker
           tasks[i].overdue = true;
         }
         that.insertIntoTasksObject(tasks[i]);
@@ -80,7 +84,9 @@ export class ListComponent implements OnInit {
           let task = new Task(null, taskInput.value, taskInput.value, startDateInput.value, endDateInput.value, url, parseInt(this.selectedCategoryId), parseInt(localStorage.getItem("user_id")), backgroundColor, false); // gotta change this to category id
           $.when(this.taskService.createTask(task)).done(function (response) {
             var realTask = JSON.parse(response._body);
-            if (Date.parse(realTask.end) < new Date().getTime()) { // add overdue marker
+            var date = new Date();
+            var offsetInMillis = date.getTimezoneOffset()*60*1000;
+            if (Date.parse(realTask.end) < (date.getTime() - offsetInMillis)) { // add overdue marker
               realTask.overdue = true;
             }
             that.insertIntoTasksObject(realTask);
@@ -164,6 +170,37 @@ export class ListComponent implements OnInit {
     // toggle active css
     this.clearActiveCategories();
     $(event.currentTarget).addClass('active');
+  }
+
+  toggleCategoryEdit(category_id) {
+    $("." + category_id).toggleClass('display-none');
+    $("." + category_id + "-input").toggleClass('display-inline');
+    if ($("." + category_id + "-input").hasClass('display-inline')) {
+      $("." + category_id + "-input").val("");
+      $("." + category_id + "-input").focus();
+    }
+  }
+
+  updateCategory(event, category_id) {
+    if(event.keyCode == 13) {
+      if($(event.currentTarget).val()) {
+        let params = { 'name':$(event.currentTarget).val() }
+        this.categoryService.updateCategory(category_id, params); // doesn't need to wait for server response
+        this.updateCategorySuperficially(category_id, $(event.currentTarget).val());
+        this.toggleCategoryEdit(category_id);
+      } else {
+        bootbox.alert('Category name must not be empty');
+      }
+    }
+  }
+
+  updateCategorySuperficially(category_id, name) {
+    for (var i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].id === category_id) {
+        this.categories[i].name = name;
+        return;
+      }
+    }
   }
 
   deleteCategory(category, event) {

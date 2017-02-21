@@ -238,3 +238,11 @@
     font-style: italic;
     font-size: 0.8em;
 }
+
+.display-none {
+    display: none !important;
+}
+
+.display-inline {
+    display: inline-block !important;
+}
