@@ -43,6 +43,14 @@ export class TaskService {
       .catch(this.handleError);
   }
 
+  updateTask(task_id, params) {
+    return this.http
+      .patch("https://calm-inlet-47809.herokuapp.com/tasks/" + task_id, params)
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
   private extractData(res: Response) {
     return res;
   }
