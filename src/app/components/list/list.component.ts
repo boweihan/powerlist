@@ -149,12 +149,12 @@ export class ListComponent implements OnInit {
 
   selectCategory(event, category) {
     if (!category) {
-      this.initializeAllTasks(false);
       this.selectedCategoryId = null;
+      this.initializeAllTasks(false);
       $('.js-category-title').text('Home'); // don't hardcode strings
     } else {
-      this.initializeCategoryTasks(false);
       this.selectedCategoryId = category.id;
+      this.initializeCategoryTasks(false);
       $('.js-category-title').text(category.name);
     }
     this.clearActiveCategories();
@@ -264,5 +264,9 @@ export class ListComponent implements OnInit {
         $(categoryElements[i]).removeClass('active');
       }
     }
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 }
