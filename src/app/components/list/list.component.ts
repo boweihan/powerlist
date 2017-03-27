@@ -167,23 +167,13 @@ export class ListComponent implements OnInit {
     if (type === "category") {
       prev = $(".category-" + id);
       inputBox = $(".category-" + id + "-input");
-    } else {
-      prev = $(".task-" + id);
-      inputBox = $(".task-" + id + "-input");
-    }
-
-    prev.toggleClass('display-none');
-
-    if (type === "category") {
+      prev.toggleClass('display-none');
       inputBox.toggleClass('display-inline');
       if (inputBox.hasClass('display-inline')) {
         inputBox.val(prev.text()).focus();
       }
     } else if (type === "task") {
-      inputBox.toggleClass('display-block');
-      if (inputBox.hasClass('display-block')) {
-        inputBox.val(prev.clone().children().remove().end().text()).focus();
-      }
+      bootbox.alert('This feature is in development.');
     }
   }
 

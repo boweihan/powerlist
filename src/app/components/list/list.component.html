@@ -33,12 +33,12 @@
       <tr style="border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
         <td style="height: 100%;"><div class="vs-task-circle" (click)="removeTask(task);"></div></td>
         <td class='vs-list-item'>
-          <span class='vs-task-description' (click)="toggleEdit(task.id, 'task')">
+          <span class='vs-task-description'>
             <div class="vs-task-title task-{{task.id}}">{{task.title}}<span class="vs-overdue" *ngIf="task.overdue">(overdue)</span></div>
-            <input #editTaskInput class="vs-task-title task-{{task.id}}-input" (keydown)="updateTask($event, task.id);" style="display:none; width:100%;" type="text" (click)="stopPropagation($event)" (dblclick)="toggleEdit(task.id, 'task')"/>
           </span>
         </td>
         <td class='vs-task-start'>{{task.start | date:'MMM dd'}}</td>
+        <td class='vs-edit-button' (click)="toggleEdit(task.id, 'task')"><i class="fa fa-edit"></i></td>
       </tr>
     </table>
   </div>

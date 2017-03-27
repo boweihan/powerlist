@@ -86,6 +86,11 @@
   text-align: center;
 }
 
+.vs-edit-button {
+  height: 100%;
+  vertical-align: center;
+}
+
 .vs-task-button {
   position: absolute;
   display: inline-block;
