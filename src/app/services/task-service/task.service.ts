@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs';
 import { Task } from '../../models/task';
+import { Observable } from 'rxjs/Rx';
+import { Config } from '../../shared/app-config';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class TaskService {
@@ -11,61 +14,39 @@ export class TaskService {
   ) { }
 
   createTask(Task) {
-    delete Task["id"]
-    return this.http
-      .post("https://calm-inlet-47809.herokuapp.com/tasks", Task)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+      delete Task["id"] // server doesn't like id property
+      return this.http.post(Config.baseUrl + "/tasks", Task)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'createTask error'));
   }
 
   getTasks() {
-    return this.http
-      .get("https://calm-inlet-47809.herokuapp.com/tasks")
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+      return this.http.get(Config.baseUrl + "/tasks")
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'getTasks error'));
   }
 
-  getTasksForUser(user_id) {
-    return this.http
-      .get("https://calm-inlet-47809.herokuapp.com/find_user_tasks?user_id=" + user_id)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+  getTasksForUser(userId) {
+      return this.http.get(Config.baseUrl + "/find_user_tasks?user_id=" + userId)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'getTasksForUser error'));
   }
 
-  deleteTask(task_id) {
-    return this.http
-      .delete("https://calm-inlet-47809.herokuapp.com/tasks/" + task_id)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+  deleteTask(taskId) {
+      return this.http.delete(Config.baseUrl + "/tasks/" + taskId)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'deleteTask error'));
   }
 
-  updateTask(task_id, params) {
-    return this.http
-      .patch("https://calm-inlet-47809.herokuapp.com/tasks/" + task_id, params)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+  updateTask(taskId, params) {
+      return this.http.patch(Config.baseUrl + "/tasks/" + taskId, params)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'updateTask error'));
   }
 
-  private extractData(res: Response) {
-    return res;
+  getCategoryTasks(categoryId) : Observable<Task[]> {
+      return this.http.get(Config.baseUrl + "/get_category_tasks?category_id=" + categoryId)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'getCategoryTasks error'));
   }
-
-  private handleError (error: Response | any) {
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Promise.reject(errMsg);
-  }
-
 }

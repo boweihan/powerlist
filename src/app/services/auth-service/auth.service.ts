@@ -1,105 +1,70 @@
 import { Injectable } from '@angular/core';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { UserService } from '../../services/user-service/user.service';
+import { Config } from '../../shared/app-config';
+import { Routes } from '../../shared/routes';
 import { Router } from '@angular/router';
-import { Http, Response } from '@angular/http';
 
+let Auth0Lock = require('auth0-lock').default; // Avoid name not found warnings
 declare var $: any;
-
-// Avoid name not found warnings
-let Auth0Lock = require('auth0-lock').default;
 
 @Injectable()
 export class AuthService {
 
-    // Configure Auth0
-    lock = new Auth0Lock('9AX3hBcDf8Hh3tobK2G6t3CYj7T8p7pZ', 'bhan.auth0.com', {});
-    jwtHelper: JwtHelper = new JwtHelper();
+    private lock = new Auth0Lock(Config.authOKey, Config.authOUser, {});
+    jwtHelper: JwtHelper = new JwtHelper(); // TODO: what is this syntax
 
     constructor(
-      private router: Router,
-      private http: Http
+        private router: Router,
+        private userService: UserService
     ) {
-      // set lock event listener in constructor
-      this.lock.on("authenticated", (authResult) => {
-        this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
-          if (error) { console.log("error on authentication"); }
-          localStorage.setItem('id_token', authResult.idToken);
-          this.getOrCreateUser(profile);
-        });
-      });
+        this.createAuthEventListener();
     }
 
-    getOrCreateUser(profile) {
-      var that = this;
-      $.when(this.getUser(profile.user_id)).done(function (response) {
-        if (response._body === "null") {
-          $.when(that.createUser(profile.user_id)).done(function (response) {
-            localStorage.setItem("user_id", JSON.parse(response._body).id);
-            that.router.navigateByUrl('/private/(aux:list)');
-          });
-        } else {
-          localStorage.setItem("user_id", JSON.parse(response._body).id);
-          that.router.navigateByUrl('/private/(aux:list)');
-        }
-      });
+    createAuthEventListener() {
+        this.lock.on("authenticated", (authResult) => {
+            this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
+                if (!error) {
+                    localStorage.setItem('id_token', authResult.idToken);
+                    this.initialize(profile);
+                } // TODO: implement error handling
+            });
+        });
+    }
+
+    initialize(profile) {
+        var that = this;
+        var username = profile.user_id;
+        this.userService.getUser(username).subscribe(
+            user => {
+                if (user) {
+                    that.handleUserLogin(user);
+                } else {
+                    that.userService.createUser(username).subscribe(
+                        user => {
+                            that.handleUserLogin(user);
+                        }
+                    )
+                }
+            }
+        )
+    }
+
+    handleUserLogin(user) {
+        localStorage.setItem("user_id", user.id);
+        this.router.navigateByUrl(Routes.main); // TODO: implement router object
+    }
+
+    isAuthenticated() {
+        return tokenNotExpired();
     }
 
     login() {
-      // Call the show method to display the widget.
-      this.lock.show();
-    }
-
-    authenticated() {
-      // Check if there's an unexpired JWT
-      // This searches for an item in localStorage with key == 'id_token'
-      return tokenNotExpired();
+        this.lock.show();
     }
 
     logout() {
-      localStorage.removeItem('id_token');
-      localStorage.removeItem('user_id');
-      localStorage.removeItem('selectedCategoryId');
-      this.router.navigate(['login']);
-    }
-
-    getUser(username) {
-      return this.http
-        .get("https://calm-inlet-47809.herokuapp.com/find_user?username=" + username)
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    createUser(username) {
-      return this.http
-        .post("https://calm-inlet-47809.herokuapp.com/users", { username: username })
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    getTasks() {
-      return this.http
-        .get("https://calm-inlet-47809.herokuapp.com/users")
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    }
-
-    private extractData(res: Response) {
-      return res;
-    }
-
-    private handleError (error: Response | any) {
-      let errMsg: string;
-      if (error instanceof Response) {
-        const body = error.json() || '';
-        const err = body.error || JSON.stringify(body);
-        errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-      } else {
-        errMsg = error.message ? error.message : error.toString();
-      }
-      console.error(errMsg);
-      return Promise.reject(errMsg);
+        localStorage.clear();
+        this.router.navigate([Routes.login]);
     }
 }

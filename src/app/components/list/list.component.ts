@@ -43,28 +43,30 @@ export class ListComponent implements OnInit {
       this.initializeAllTasks(isFirstLoad);
     } else {
       var that = this;
-      $.when(this.categoryService.getCategoryTasks(this.selectedCategoryId)).done(function (response) {
-        that.tasks.length = 0;
-        let tasks = JSON.parse(response._body);
-        for (var i = 0; i < tasks.length; i++) {
-          tasks[i] = that.appendIfOverdue(tasks[i]);
-          that.insertIntoTasksObject(tasks[i]);
-        }
-      });
+      this.taskService.getCategoryTasks(this.selectedCategoryId).subscribe(
+          tasks => {
+              that.tasks.length = 0;
+              for (var i = 0; i < tasks.length; i++) {
+                tasks[i] = that.appendIfOverdue(tasks[i]);
+                that.insertIntoTasksObject(tasks[i]);
+              }
+          }
+      )
     }
   }
 
   initializeAllTasks(isFirstLoad) {
     var that = this;
-    $.when(this.taskService.getTasksForUser(localStorage.getItem("user_id"))).done(function (response) {
-      let tasks = JSON.parse(response._body);
-      that.tasks.length = 0;
-      for (var i = 0; i < tasks.length; i++) {
-        tasks[i] = that.appendIfOverdue(tasks[i]);
-        that.insertIntoTasksObject(tasks[i]);
-        if (isFirstLoad) { that.calendarService.appendTaskToCalendar(tasks[i]); }
-      }
-    });
+    this.taskService.getTasksForUser(localStorage.getItem("user_id")).subscribe(
+        tasks => {
+            that.tasks.length = 0;
+            for (var i = 0; i < tasks.length; i++) {
+              tasks[i] = that.appendIfOverdue(tasks[i]);
+              that.insertIntoTasksObject(tasks[i]);
+              if (isFirstLoad) { that.calendarService.appendTaskToCalendar(tasks[i]); }
+            }
+        }
+    )
   }
 
   appendIfOverdue(task) {
@@ -89,12 +91,15 @@ export class ListComponent implements OnInit {
                               parseInt(localStorage.getItem("user_id")),
                               this.colors[Math.floor(Math.random() * 4)],
                               false);
-          $.when(this.taskService.createTask(task)).done(function (response) {
-            let realTask = that.appendIfOverdue(JSON.parse(response._body));
-            that.insertIntoTasksObject(realTask);
-            that.calendarService.appendTaskToCalendar(realTask); // this passes the task ID as the fullcalendarID
-            taskInput.value = startDateInput.value = endDateInput.value = null;
-          });
+                              
+          this.taskService.createTask(task).subscribe(
+              task => {
+                  let updatedTask = that.appendIfOverdue(task);
+                  that.insertIntoTasksObject(updatedTask);
+                  that.calendarService.appendTaskToCalendar(updatedTask); // this passes the task ID as the fullcalendarID
+                  taskInput.value = startDateInput.value = endDateInput.value = null;
+              }
+          )
         } else { bootbox.alert("Task start date can't be after the end date!"); }
       } else { bootbox.alert('Please fill out all form fields.'); }
     }
@@ -113,7 +118,14 @@ export class ListComponent implements OnInit {
   }
 
   removeTask(task) {
-    this.taskService.deleteTask(task.id); // race condition here between ui and db, maybe change?
+    this.taskService.deleteTask(task.id).subscribe(
+        callback => { // since delete doesn't return a response
+            for (var i = 0; i < this.tasks.length; i ++) {
+                if (this.tasks[i] === task) { this.tasks.splice(i, 1); }
+            }
+            this.calendarService.removeTaskFromCalendar(task);
+        }
+    )
     this.calendarService.removeTaskFromCalendar(task);
     for (var i = 0; i < this.tasks.length; i ++) {
       if (this.tasks[i] === task) { this.tasks.splice(i, 1); }
@@ -122,27 +134,29 @@ export class ListComponent implements OnInit {
 
   initializeCategories() {
     var that = this;
-    $.when(this.categoryService.getCategoriesForUser(localStorage.getItem("user_id"))).done(function (response) {
-      let categories = JSON.parse(response._body);
-      for (var i = 0; i < categories.length; i++) {
-        that.categories.push(categories[i]);
-      }
-    });
+    this.categoryService.getCategoriesForUser(localStorage.getItem("user_id")).subscribe(
+        categories => {
+            for (var i = 0; i < categories.length; i++) {
+                that.categories.push(categories[i]);
+            }
+        }
+    )
   }
 
   addCategory(categoryInput, event) {
     let that = this;
     if(event.keyCode == 13 || event.type === "click") {
       if(categoryInput.value) {
-        let category = new Category(null,
-                                    categoryInput.value,
-                                    parseInt(localStorage.getItem("user_id")));
-        $.when(this.categoryService.createCategory(category)).done(function (response) {
-          let realCategory = JSON.parse(response._body);
-          that.categories.push(realCategory);
-          that.hideCategoryInput(realCategory);
-          categoryInput.value = null;
-        });
+        let category = new Category(null, categoryInput.value, parseInt(localStorage.getItem("user_id")));
+
+        this.categoryService.createCategory(category).subscribe(
+            category => {
+                that.categories.push(category);
+                that.hideCategoryInput(category);
+                categoryInput.value = null;
+            }
+        )
+
       } else { bootbox.alert('Please enter a category.'); }
     }
   }
@@ -225,12 +239,16 @@ export class ListComponent implements OnInit {
     bootbox.confirm("Are you sure you want to delete category: " + category.name + "?", function(response) {
       if (response) {
         if (category.id === that.selectedCategoryId) { that.selectedCategoryId = null; } // if you delete current category
-        $.when(that.categoryService.deleteCategory(category.id)).done(function (response) {
-          for (let i = 0; i < that.categories.length; i++) {
-            if (that.categories[i] === category) { that.categories.splice(i, 1); }
-          }
-          that.initializeCategoryTasks(false);
-        })
+        that.categoryService.deleteCategory(category.id).subscribe(
+            callback => {
+                for (let i = 0; i < that.categories.length; i++) {
+                    if (that.categories[i] === category) {
+                        that.categories.splice(i, 1);
+                    }
+                }
+                that.initializeCategoryTasks(false);
+            }
+        )
       }
     });
   }

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { AuthService } from '../../services/auth-service/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,6 @@ export class LoginComponent implements OnInit, OnChanges {
 
   constructor(
     private authService: AuthService,
-    private router: Router
   ) { }
 
   ngOnChanges() { }

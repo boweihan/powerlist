@@ -11,14 +11,8 @@
       <li class="nav-item float-xs-right" [routerLinkActive]="['active']">
         <a class="nav-link" href="#" [routerLink]="['']"><i class="fa fa-home vs-nav-icon" aria-hidden="true"></i></a>
       </li>
-      <!-- <li class="nav-item" [routerLinkActive]="['active']">
-        <a class="nav-link" href="#" [routerLink]="['../private', {outlets: {'aux':['list']}}]"><i class="fa fa-book vs-nav-icon" aria-hidden="true"></i></a>
-      </li>
       <li class="nav-item" [routerLinkActive]="['active']">
-        <a class="nav-link" href="#" [routerLink]="['']"><i class="fa fa-calendar-check-o vs-nav-icon" aria-hidden="true"></i></a>
-      </li> -->
-      <li class="nav-item" [routerLinkActive]="['active']">
-        <a class="nav-link" (click)="authService.logout()" *ngIf="authService.authenticated()"><i class="fa fa-sign-out vs-nav-icon" aria-hidden="true"></i></a>
+        <a class="nav-link" (click)="authService.logout()" *ngIf="authService.isAuthenticated()"><i class="fa fa-sign-out vs-nav-icon" aria-hidden="true"></i></a>
       </li>
     </ul>
   </div>

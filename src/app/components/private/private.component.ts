@@ -19,7 +19,7 @@ export class PrivateComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (!this.authService.authenticated()) {
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate(['login']);
     }
   }

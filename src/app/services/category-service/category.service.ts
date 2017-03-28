@@ -1,87 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs';
 import { Category } from '../../models/category';
+import { Observable } from 'rxjs/Rx';
+import { Config } from '../../shared/app-config';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class CategoryService {
 
   constructor(
     private http: Http
-  ) { }
-
-  getCategoryTasks(category_id) { // move this to task service eventually
-    return this.http
-      .get("https://calm-inlet-47809.herokuapp.com/get_category_tasks?category_id=" + category_id)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
-  }
+  ) {}
 
   createCategory(Category) {
-    delete Category["id"]
-    return this.http
-      .post("https://calm-inlet-47809.herokuapp.com/categories", Category)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+      delete Category["id"] // server doesn't like seeing id property
+      return this.http.post(Config.baseUrl + "/categories", Category)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'createCategory error'));
   }
 
   getCategoryByName(name) {
-    return this.http
-      .get("https://calm-inlet-47809.herokuapp.com/find_category?name=" + name)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+      return this.http.get(Config.baseUrl + "/find_category?name=" + name)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'getCategoryByName error'));
   }
 
   getCategories() {
-    return this.http
-      .get("https://calm-inlet-47809.herokuapp.com/categories")
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+      return this.http.get(Config.baseUrl + "/categories")
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'getCategories error'));
   }
 
-  getCategoriesForUser(user_id) {
-    return this.http
-      .get("https://calm-inlet-47809.herokuapp.com/find_user_categories?user_id=" + user_id)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+  getCategoriesForUser(userId) {
+      return this.http.get(Config.baseUrl + "/find_user_categories?user_id=" + userId)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'getCategoriesForUser error'));
   }
 
-  deleteCategory(category_id) {
-    return this.http
-      .delete("https://calm-inlet-47809.herokuapp.com/categories/" + category_id)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+  deleteCategory(categoryId) {
+      return this.http.delete(Config.baseUrl + "/categories/" + categoryId)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'deleteCategory error'));
   }
 
-  updateCategory(category_id, params) {
-    return this.http
-      .patch("https://calm-inlet-47809.herokuapp.com/categories/" + category_id, params)
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+  updateCategory(categoryId, params) {
+      return this.http.patch(Config.baseUrl + "/categories/" + categoryId, params)
+          .map((res:Response) => res.json())
+          .catch((error:any) => Observable.throw(error.json().error || 'updateCategory error'));
   }
-
-  private extractData(res: Response) {
-    return res;
-  }
-
-  private handleError (error: Response | any) {
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Promise.reject(errMsg);
-  }
-
 }

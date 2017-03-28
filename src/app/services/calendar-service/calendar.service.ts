@@ -8,10 +8,10 @@ export class CalendarService {
   constructor() { }
 
   appendTaskToCalendar(task) {
-    $('.fullcalendar').fullCalendar('renderEvent', task, true);
+      $('.fullcalendar').fullCalendar('renderEvent', task, true);
   }
 
   removeTaskFromCalendar(task) {
-    $('.fullcalendar').fullCalendar('removeEvents', task.id);
+      $('.fullcalendar').fullCalendar('removeEvents', task.id);
   }
 }
