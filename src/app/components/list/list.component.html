@@ -1,54 +1,61 @@
 <div class="sidebar">
-
-  <ul class="vs-categories">
-    <li class='vs-category'>
-      <div class="js-category-description vs-category-description" (click)="selectCategory($event)" style="color: black;"><i class="fa fa-home" aria-hidden="true" style="padding-right: 15px; font-weight: 700;"></i> Home</div>
-    </li>
-
-    <li class='vs-category' *ngFor="let category of categories">
-      <div (click)="selectCategory($event, category)" (dblclick)="toggleEdit(category.id, 'category')" class='js-category-description vs-category-description'>
-        <i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px; line-height: 1.5em;"></i>
-        <p class="category-{{category.id}}" style="display:inline-block; margin:0; padding:0;">{{category.name}}</p>
-        <input #editCategoryInput class="category-{{category.id}}-input" (keydown)="updateCategory($event, category.id);" style="display:none;" type="text" maxlength="35"/>
-        <i class="fa fa-times" aria-hidden="true" (click)="deleteCategory(category, $event);" style="float: right; line-height: 1.5em;"></i>
-      </div>
-    </li>
-  </ul>
-
-  <form (keydown)="addCategory(categoryInput, $event);" class="js-category-form vs-category-form">
-    <a href="javascript:void(0);"><i class="fa fa-plus" (click)="showCategoryInput();" aria-hidden="true" style='color: #D84D20; padding-left: 20px;'></i></a>
-    <a href="javascript:void(0);"><p class="js-category-label vs-category-add" (click)="showCategoryInput();">Add Category</p></a>
-    <input #categoryInput type="text" class="js-category-input vs-category-input" maxlength="35"/><br> <!-- force max length for now -->
-    <a href="javascript:void(0);" class="js-category-input vs-category-input-cancel" (click)="hideCategoryInput(categoryInput);">cancel</a>
-  </form>
-
+    <ul class="vs-categories">
+        <li class='vs-category'>
+            <div class="js-category-description vs-category-description" (click)="selectCategory($event, categoryTitle)" style="color: black;">
+                <i class="fa fa-home" aria-hidden="true" style="padding-right: 15px; font-weight: 700;"></i>
+                Home
+            </div>
+        </li>
+        <li class='vs-category' *ngFor="let category of categories">
+            <div (click)="selectCategory($event, categoryTitle, category)" (dblclick)="toggleEdit(category.id, 'category')" class='js-category-description vs-category-description'>
+                <i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px; line-height: 1.5em;"></i>
+                <p class="category-{{category.id}}" style="display:inline-block; margin:0; padding:0;">{{category.name}}</p>
+                <input #editCategoryInput class="category-{{category.id}}-input" (keydown)="updateCategory($event, category.id);" style="display:none;" type="text" maxlength="35"/>
+                <i class="fa fa-times" aria-hidden="true" (click)="deleteCategory(category, $event);" style="float: right; line-height: 1.5em;"></i>
+            </div>
+        </li>
+    </ul>
+    <form (keydown)="addCategory(categoryInput, $event);" class="js-category-form vs-category-form">
+        <a href="javascript:void(0);">
+            <i class="fa fa-plus" (click)="showCategoryInput();" aria-hidden="true" style='color: #D84D20; padding-left: 20px;'></i>
+        </a>
+        <a href="javascript:void(0);">
+            <p class="js-category-label vs-category-add" (click)="showCategoryInput();">Add Category</p>
+        </a>
+        <input #categoryInput type="text" class="js-category-input vs-category-input" maxlength="35"/><br> <!-- force max length for now -->
+        <a href="javascript:void(0);" class="js-category-input vs-category-input-cancel" (click)="hideCategoryInput(categoryInput);">cancel</a>
+    </form>
 </div>
 
 <div class="list">
-
-  <h1 class="vs-category-title js-category-title">Home</h1>
-
-  <div class="vs-list-table">
-    <table style='width: 100%;height:0;'>
-      <tr style="border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
-        <td style="height: 100%;"><div class="vs-task-circle" (click)="removeTask(task);"></div></td>
-        <td class='vs-list-item'>
-          <span class='vs-task-description'>
-            <div class="vs-task-title task-{{task.id}}">{{task.title}}<span class="vs-overdue" *ngIf="task.overdue">(overdue)</span></div>
-          </span>
-        </td>
-        <td class='vs-task-start'>{{task.start | date:'MMM dd'}}</td>
-        <td class='vs-edit-button' (click)="toggleEdit(task.id, 'task')"><i class="fa fa-edit"></i></td>
-      </tr>
-    </table>
-  </div>
-
-  <form (keydown)="addTask(taskInput, startDateInput, endDateInput, $event);">
-      <input #taskInput type="text" class="vs-task-input" placeholder="Description"/>
-      <input #startDateInput class="flatpickrStart vs-flatpickr-start" placeholder="Start Date" type="datetime-local" step="any"/>
-      <input #endDateInput class="flatpickrEnd vs-flatpickr-end" placeholder="End Date" type="datetime-local" step="any"/>
-  </form>
-
-  <button class='vs-task-button btn btn-lg btn-primary' (click)="addTask(taskInput, startDateInput, endDateInput, $event);"><i class="fa fa-plus" aria-hidden="true"></i></button>
-
+    <h1 #categoryTitle class="vs-category-title js-category-title">Home</h1>
+    <div class="vs-list-table">
+        <table style='width: 100%;height:0;'>
+            <tr style="border-bottom: 1px solid #f2f2f2;" *ngFor="let task of tasks">
+                <td style="height: 100%;">
+                    <div class="vs-task-circle" (click)="removeTask(task);"></div>
+                </td>
+                <td class='vs-list-item'>
+                    <span class='vs-task-description'>
+                        <div class="vs-task-title task-{{task.id}}">
+                            {{task.title}}
+                            <span class="vs-overdue" *ngIf="task.overdue">(overdue)</span>
+                        </div>
+                    </span>
+                </td>
+                <td class='vs-task-start'>{{task.start | date:'MMM dd'}}</td>
+                <td class='vs-edit-button' (click)="toggleEdit(task.id, 'task')">
+                    <i class="fa fa-edit"></i>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <form (keydown)="addTask(taskInput, startDateInput, endDateInput, $event);">
+        <input #taskInput type="text" class="vs-task-input" placeholder="Description"/>
+        <input #startDateInput class="flatpickrStart vs-flatpickr-start" placeholder="Start Date" type="datetime-local" step="any"/>
+        <input #endDateInput class="flatpickrEnd vs-flatpickr-end" placeholder="End Date" type="datetime-local" step="any"/>
+    </form>
+    <button class='vs-task-button btn btn-lg btn-primary' (click)="addTask(taskInput, startDateInput, endDateInput, $event);">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
 </div>

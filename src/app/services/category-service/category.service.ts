@@ -3,8 +3,6 @@ import { Http, Response } from '@angular/http';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/app-config';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class CategoryService {

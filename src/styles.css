@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files  */
+/*********************** Global Settings **************************************/
 * {
   margin: 0;
   padding: 0;
@@ -9,43 +10,34 @@
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
 }
-/* this needs to be here instead of the component.css because it is included after fullcalender.css */
+
+/********************* FullCalendar customization *****************************/
 .fc-toolbar h2 {
   font-size: 1em;
   line-height: 40px;
   font-weight: 700;
 }
-
 .fc-button {
   border: none;
   background-image: none;
   text-shadow: none;
   box-shadow: none;
 }
-
-.fc-state-active {
-
-}
-
 .fc-today-button {
   background: none;
 }
-  .fc-today-button:hover {
-    text-decoration: underline;
-  }
-
+    .fc-today-button:hover {
+      text-decoration: underline;
+    }
 .fc-day-header span {
   font-weight: normal;
   font-size: 0.9em;
 }
-
 hr.fc-divider {
   padding: 0;
   border-top: 1px solid black;
 }
-
 /* position of calendar toggles */
-
 @media (max-width: 768px) {
     .fc-center {
         position: absolute;
@@ -56,7 +48,6 @@ hr.fc-divider {
         width: calc(100% - 40px);
     }
 }
-
 @media (min-width: 768px) {
     .fc-center {
         position: absolute;
@@ -67,15 +58,14 @@ hr.fc-divider {
         width: calc(100% - 40px);
     }
 }
-
 .fc-center > .fc-button {
     float: none;
 }
-
 button:focus {
     outline: none;
 }
 
+/************************* Flatpickr elements *********************************/
 .vs-flatpickr-start {
   position: absolute;
   display: inline-block;

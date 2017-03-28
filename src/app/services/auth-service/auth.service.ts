@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { UserService } from '../../services/user-service/user.service';
 import { Config } from '../../shared/app-config';
-import { Routes } from '../../shared/routes';
+import { AppRoutes } from '../../shared/routes';
 import { Router } from '@angular/router';
 
 let Auth0Lock = require('auth0-lock').default; // Avoid name not found warnings
@@ -18,10 +18,10 @@ export class AuthService {
         private router: Router,
         private userService: UserService
     ) {
-        this.createAuthEventListener();
+        this.createLockEventListeners();
     }
 
-    createAuthEventListener() {
+    createLockEventListeners() {
         this.lock.on("authenticated", (authResult) => {
             this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
                 if (!error) {
@@ -52,7 +52,7 @@ export class AuthService {
 
     handleUserLogin(user) {
         localStorage.setItem("user_id", user.id);
-        this.router.navigateByUrl(Routes.main); // TODO: implement router object
+        this.router.navigateByUrl(AppRoutes.main); // TODO: implement router object
     }
 
     isAuthenticated() {
@@ -65,6 +65,6 @@ export class AuthService {
 
     logout() {
         localStorage.clear();
-        this.router.navigate([Routes.login]);
+        this.router.navigate([AppRoutes.login]);
     }
 }

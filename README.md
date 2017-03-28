@@ -10,11 +10,10 @@ Front End:
 - TypeScript
 - JQuery
 - Bootstrap
-- LESS
 
 Back End:
 - NodeJS
-- Express
+- Ruby on Rails
 
 Database:
 - Postgres

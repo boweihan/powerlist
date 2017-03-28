@@ -3,8 +3,6 @@ import { Http, Response } from '@angular/http';
 import { User } from '../../models/user';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/app-config';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class UserService {

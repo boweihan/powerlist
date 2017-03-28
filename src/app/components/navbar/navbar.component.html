@@ -1,19 +1,26 @@
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <button class="navbar-toggler navbar-toggler-right vs-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span><i class="fa fa-bars vs-toggle-icon" aria-hidden="true"></i></span>
-  </button>
-  <a class="navbar-brand" href="#" style="color: white; font-weight: 700;"><i class="fa fa-plug" aria-hidden="true" style="margin-right: 10px;"></i>PowerList</a>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-    </ul>
-    <ul class="navbar-nav">
-      <li class="nav-item float-xs-right" [routerLinkActive]="['active']">
-        <a class="nav-link" href="#" [routerLink]="['']"><i class="fa fa-home vs-nav-icon" aria-hidden="true"></i></a>
-      </li>
-      <li class="nav-item" [routerLinkActive]="['active']">
-        <a class="nav-link" (click)="authService.logout()" *ngIf="authService.isAuthenticated()"><i class="fa fa-sign-out vs-nav-icon" aria-hidden="true"></i></a>
-      </li>
-    </ul>
-  </div>
+    <button class="navbar-toggler navbar-toggler-right vs-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span>
+            <i class="fa fa-bars vs-toggle-icon" aria-hidden="true"></i>
+        </span>
+    </button>
+    <a class="navbar-brand" href="#" style="color: white; font-weight: 700;">
+        <i class="fa fa-plug" aria-hidden="true" style="margin-right: 10px;"></i>
+        PowerList
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto"></ul>
+        <ul class="navbar-nav">
+            <li class="nav-item float-xs-right" [routerLinkActive]="['active']">
+                <a class="nav-link" href="#" [routerLink]="['']">
+                    <i class="fa fa-home vs-nav-icon" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active']">
+                <a class="nav-link" (click)="authService.logout()" *ngIf="authService.isAuthenticated()">
+                    <i class="fa fa-sign-out vs-nav-icon" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>
