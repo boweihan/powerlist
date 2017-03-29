@@ -11,7 +11,7 @@
         height: 100vh;
     }
 }
-@media (min-width: 768px) and (max-width: 992px) {
+@media (min-width: 768px) and (max-width: 991px) {
     .list {
         position: relative;
         display: block;
@@ -129,8 +129,15 @@
         width: 100%;
         margin: auto;
     }
+    .vs-category-inline-input {
+        padding-left: 5px;
+        width: calc(100% - 20px);
+    }
+    .vs-category-inline-container {
+        width: calc(100% - 40px);
+    }
 }
-@media (min-width: 768px) and (max-width: 992px) {
+@media (min-width: 768px) and (max-width: 991px) {
     .sidebar {
         position: relative;
         height: calc(100vh - 50px);
@@ -152,6 +159,13 @@
         list-style: none;
         width: 80%;
         margin: auto;
+    }
+    .vs-category-inline-input {
+        padding-left: 5px;
+        width: calc(100% - 20px);
+    }
+    .vs-category-inline-container {
+        width: calc(100% - 40px);
     }
 }
 
@@ -177,24 +191,31 @@
     .vs-categories {
         list-style: none;
     }
+    .vs-category-inline-input {
+        padding-left: 5px;
+        width: 170px;
+    }
 }
 
 .vs-category {
     padding: 0px;
 }
-    .vs-category:hover {
-        background-color: white;
-        cursor: pointer;
-    }
     .sidebar .active {
         background-color: white;
     }
 
 .vs-category-description {
     font-weight: 600;
-    display: block;
+    display: inline-block;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: calc(100% - 20px);
     padding: 5px;
 }
+    .vs-category-description:hover {
+        background-color: white;
+        cursor: pointer;
+    }
 
 .vs-category-add {
     display: inline-block;
@@ -228,6 +249,10 @@
     color: black;
     border-bottom: 2px solid #f2f2f2;
     margin-bottom: 0;
+}
+
+#categoryDropDownMenu:active {
+    transform: scale(1.7);
 }
 
 /******************************* edit in place ********************************/

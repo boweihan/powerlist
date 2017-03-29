@@ -36,10 +36,8 @@ export class ListComponent implements OnInit {
     }
 
     initializeUI() {
-        // using flatpickr jquery library
         flatpickr('.flatpickrStart', { utc: true, enableTime: true });
         flatpickr('.flatpickrEnd', { utc: true, enableTime: true });
-        // initialize home tab
         $('.js-category-description').toggleClass('active');
     }
 
@@ -168,59 +166,60 @@ export class ListComponent implements OnInit {
         )
     }
 
-    selectCategory(event, categoryTitle, category) {
+    selectCategory(element, boundCategoryTitle, category) {
         if (!category) {
             this.selectedCategoryId = null;
             this.fetchHomeTasks(false);
-            categoryTitle.textContent = "Home";
+            boundCategoryTitle.textContent = "Home";
         } else {
             this.selectedCategoryId = category.id;
             this.fetchTasks(false);
-            categoryTitle.textContent = category.name;
+            boundCategoryTitle.textContent = category.name;
         }
-        this.setActiveCategory(event);
+        this.setActiveCategory(element);
     }
 
-    setActiveCategory(event) {
+    setActiveCategory(element) {
         // use jquery to process multiple elements of same class
         let categoryElements = $('.js-category-description');
-
         for (let i = 0; i < categoryElements.length; i++) {
             if ($(categoryElements[i]).hasClass('active')) {
                 $(categoryElements[i]).removeClass('active');
             }
         }
-
-        $(event.currentTarget).addClass('active');
+        $(element).addClass('active');
     }
 
     // continue refactoring below
     toggleEdit(id, type) {
-        let prev, inputBox;
+        let name, container, input;
 
         if (type === "category") {
-            prev = $(".category-" + id);
-            inputBox = $(".category-" + id + "-input");
-            prev.toggleClass('display-none');
-            inputBox.toggleClass('display-inline');
-            if (inputBox.hasClass('display-inline')) {
-                inputBox.val(prev.text()).focus();
+            name = $(".category-" + id);
+            container = $(".category-" + id + "-container");
+            input = $(".category-" + id + "-input");
+            name.toggleClass('display-none');
+            container.toggleClass('display-none');
+            container.toggleClass('display-inline');
+            if (container.hasClass('display-inline')) {
+                input.val(name.text()).focus();
             }
         } else if (type === "task") {
             bootbox.alert('This feature is in development.');
         }
     }
 
-    updateCategory(event, categoryId) { // refactor this with update task
+    updateCategory(event, categoryId, boundCategoryTitle) { // refactor this with update task
         if(event.keyCode != 13) {
             return;
         }
         if($(event.currentTarget).val()) {
+            let updatedName = $(event.currentTarget).val();
             let params = {
-                'name':$(event.currentTarget).val()
+                'name':updatedName
             };
             this.categoryService.updateCategory(categoryId, params); // doesn't need to wait for server response
-            this.updateCategorySuperficially(categoryId, $(event.currentTarget).val());
+            this.updateCategorySuperficially(categoryId, updatedName, boundCategoryTitle);
             this.toggleEdit(categoryId, 'category');
         } else {
             bootbox.alert('Category name must not be empty');
@@ -252,18 +251,18 @@ export class ListComponent implements OnInit {
         }
     }
 
-    updateCategorySuperficially(categoryId, name) {
+    updateCategorySuperficially(categoryId, name, boundCategoryTitle) {
         for (let i = 0; i < this.categories.length; i++) {
             if (this.categories[i].id === categoryId) {
                 this.categories[i].name = name;
+                boundCategoryTitle.textContent = updatedName;
                 return;
             }
         }
     }
 
-    deleteCategory(category, event) {
+    deleteCategory(category) {
         let that = this;
-        event.stopPropagation();
         bootbox.confirm("Delete category: " + category.name + "?", function(response) {
             if (response) {
                 if (category.id === that.selectedCategoryId) {
@@ -293,5 +292,9 @@ export class ListComponent implements OnInit {
         categoryInput.value = null;
         $('.js-category-input').hide();
         $('.js-category-label').show();
+    }
+
+    stopPropagation(event) {
+        event.stopPropagation();
     }
 }
