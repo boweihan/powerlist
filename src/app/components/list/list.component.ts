@@ -255,7 +255,9 @@ export class ListComponent implements OnInit {
         for (let i = 0; i < this.categories.length; i++) {
             if (this.categories[i].id === categoryId) {
                 this.categories[i].name = name;
-                boundCategoryTitle.textContent = updatedName;
+                if (this.selectedCategoryId === categoryId) {
+                    boundCategoryTitle.textContent = name;
+                }
                 return;
             }
         }
