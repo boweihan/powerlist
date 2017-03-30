@@ -80,6 +80,7 @@
 .vs-edit-button {
     height: 100%;
     vertical-align: center;
+    font-size: 0.7em;
 }
 .vs-task-button {
     position: absolute;

@@ -39,6 +39,14 @@ export class ListComponent implements OnInit {
         flatpickr('.flatpickrStart', { utc: true, enableTime: true });
         flatpickr('.flatpickrEnd', { utc: true, enableTime: true });
         $('.js-category-description').toggleClass('active');
+        $('#listModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var taskId = button.data('taskid') // Extract info from data-* attributes
+            var title = button.data('title') // Extract info from data-* attributes
+            var modal = $(this)
+            modal.find('.modal-body #task-title').val(title);
+            modal.find('.hidden-id').val(taskId);
+        })
     }
 
     fetchTasks(firstLoad, boundCategoryTitle, category) {
@@ -172,7 +180,7 @@ export class ListComponent implements OnInit {
         )
     }
 
-    selectCategory(element, boundCategoryTitle, category) {
+    selectCategory(boundCategory, boundCategoryTitle, category) {
         if (!category) {
             this.selectedCategoryId = null;
             this.fetchHomeTasks(false, boundCategoryTitle);
@@ -180,7 +188,7 @@ export class ListComponent implements OnInit {
             this.selectedCategoryId = category.id;
             this.fetchTasks(false, boundCategoryTitle, category.name);
         }
-        this.setActiveCategory(element);
+        this.setActiveCategory(boundCategory);
     }
 
     setActiveCategory(element) {
@@ -194,22 +202,17 @@ export class ListComponent implements OnInit {
         $(element).addClass('active');
     }
 
-    // continue refactoring below
-    toggleEdit(id, type) {
+    editCategory(id) {
         let name, container, input;
 
-        if (type === "category") {
-            name = $(".category-" + id);
-            container = $(".category-" + id + "-container");
-            input = $(".category-" + id + "-input");
-            name.toggleClass('display-none');
-            container.toggleClass('display-none');
-            container.toggleClass('display-inline');
-            if (container.hasClass('display-inline')) {
-                input.val(name.text()).focus();
-            }
-        } else if (type === "task") {
-            bootbox.alert('This feature is in development.');
+        name = $(".category-" + id);
+        container = $(".category-" + id + "-container");
+        input = $(".category-" + id + "-input");
+        name.toggleClass('display-none');
+        container.toggleClass('display-none');
+        container.toggleClass('display-inline');
+        if (container.hasClass('display-inline')) {
+            input.val(name.text()).focus();
         }
     }
 
@@ -222,46 +225,57 @@ export class ListComponent implements OnInit {
             let params = {
                 'name':updatedName
             };
-            this.categoryService.updateCategory(categoryId, params); // doesn't need to wait for server response
-            this.updateCategorySuperficially(categoryId, updatedName, boundCategoryTitle);
-            this.toggleEdit(categoryId, 'category');
+            this.categoryService.updateCategory(categoryId, params).subscribe(
+                category => {
+                    this.editCategory(category.id); // toggle inline edit back
+                    this.updateCategorySuperficially(category, boundCategoryTitle);
+                }
+            )
         } else {
-            bootbox.alert('Category name must not be empty');
+            bootbox.alert('Category name must not be empty.');
         }
     }
 
-    updateTask(event, taskId) {
-        if(event.keyCode != 13) {
-            return;
-        }
-        if($(event.currentTarget).val()) {
-            let params = {
-                'title':$(event.currentTarget).val()
-            };
-            this.taskService.updateTask(taskId, params); // doesn't need to wait for server response
-            this.updateTaskSuperficially(taskId, $(event.currentTarget).val());
-            this.toggleEdit(taskId, 'task');
-        } else {
-            bootbox.alert('Task title must not be empty');
-        }
-    }
-
-    updateTaskSuperficially(taskId, title) {
-        for (let i = 0; i < this.tasks.length; i++) {
-            if (this.tasks[i].id === taskId) {
-                this.tasks[i].title = title;
+    updateCategorySuperficially(category, boundCategoryTitle) {
+        for (let i = 0; i < this.categories.length; i++) {
+            if (this.categories[i].id === category.id) {
+                this.categories[i].name = category.name; // this has to be a shallow object copy to avoid async re-rendering so category can stay selected
+                if (this.selectedCategoryId === category.id) {
+                    boundCategoryTitle.textContent = category.name;
+                    let newCategory = document.getElementsByClassName('js-category-reselect-' + category.id);
+                    this.setActiveCategory(newCategory);
+                }
                 return;
             }
         }
     }
 
-    updateCategorySuperficially(categoryId, name, boundCategoryTitle) {
-        for (let i = 0; i < this.categories.length; i++) {
-            if (this.categories[i].id === categoryId) {
-                this.categories[i].name = name;
-                if (this.selectedCategoryId === categoryId) {
-                    boundCategoryTitle.textContent = name;
+    updateTask(boundTitle, boundStart, boundEnd, boundHiddenId) {
+        let title = $(boundTitle).val();
+        let start = $(boundStart).val();
+        let end = $(boundEnd).val();
+        let id = parseInt($(boundHiddenId).val());
+        if (title || start || end || id) {
+            let params = {};
+            if (title) { params['title'] = title; }
+            if (start) { params['start'] = start; }
+            if (end) { params['end'] = end; }
+            this.taskService.updateTask(id, params).subscribe(
+                task => {
+                    this.updateTaskSuperficially(task);
                 }
+            )
+        } else {
+            bootbox.alert('Please fill in at least 1 edit field.');
+        }
+    }
+
+    updateTaskSuperficially(task) {
+        for (let i = 0; i < this.tasks.length; i++) {
+            if (this.tasks[i].id === task.id) {
+                this.tasks[i] = task;
+                this.calendarService.removeTaskFromCalendar(task);
+                this.calendarService.appendTaskToCalendar(task); // update calendar after changing task
                 return;
             }
         }
@@ -302,5 +316,9 @@ export class ListComponent implements OnInit {
 
     stopPropagation(event) {
         event.stopPropagation();
+    }
+
+    removeModalValues(dom1, dom2, dom3, dom4) {
+        dom1.value = dom2.value = dom3.value = dom4.value = null; // NOTE: lol
     }
 }

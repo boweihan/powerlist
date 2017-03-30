@@ -1,3 +1,4 @@
+<!-- sidebar -->
 <div class="sidebar">
     <ul class="vs-categories">
         <li class='vs-category'>
@@ -8,19 +9,19 @@
         </li>
         <li class='vs-category' *ngFor="let category of categories">
             <div>
-                <div #boundCategory (click)="selectCategory(boundCategory, boundCategoryTitle, category)" class='js-category-description vs-category-description'>
+                <div #boundCategory (click)="selectCategory(boundCategory, boundCategoryTitle, category)" class='js-category-description js-category-reselect-{{category.id}} vs-category-description'>
                     <i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px; line-height: 1.5em;"></i>
                     <p class="category-{{category.id}}" style="display:inline-block; margin:0; padding:0;">{{category.name}}</p>
                     <span class="category-{{category.id}}-container vs-category-inline-container" style="display:none;">
                         <input class="category-{{category.id}}-input vs-category-inline-input" (keydown)="updateCategory($event, category.id, boundCategoryTitle);" type="text" maxlength="35"/>
-                        <i class="fa fa-times" (click)="toggleEdit(category.id, 'category')" style="padding-top: 5px;"></i>
+                        <i class="fa fa-times" (click)="editCategory(category.id)" style="padding-top: 5px;"></i>
                     </span>
                 </div>
                 <div class="dropdown" style="float: right; line-height: 1.5em; padding: 5px;">
                     <a class="fa fa-caret-down" id="categoryDropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="categoryDropDownMenu">
                         <a class="dropdown-item" (click)="selectCategory(boundCategory, boundCategoryTitle, category)">Select</a>
-                        <a class="dropdown-item" (click)="toggleEdit(category.id, 'category')">Edit</a>
+                        <a class="dropdown-item" (click)="editCategory(category.id)">Edit</a>
                         <a class="dropdown-item" (click)="deleteCategory(category);">Delete</a>
                     </div>
                 </div>
@@ -39,6 +40,7 @@
     </form>
 </div>
 
+<!-- list -->
 <div class="list">
     <h1 #boundCategoryTitle class="vs-category-title js-category-title">Home</h1>
     <div class="vs-list-table">
@@ -56,7 +58,7 @@
                     </span>
                 </td>
                 <td class='vs-task-start'>{{task.start | date:'MMM dd'}}</td>
-                <td class='vs-edit-button' (click)="toggleEdit(task.id, 'task')">
+                <td class='vs-edit-button' data-toggle="modal" data-target="#listModal" [attr.data-taskid]="task.id" [attr.data-title]="task.title">
                     <i class="fa fa-edit"></i>
                 </td>
             </tr>
@@ -65,9 +67,44 @@
     <form (keydown)="addTask(boundTaskInput, boundStartDateInput, boundEndDateInput, $event);">
         <input #boundTaskInput type="text" class="vs-task-input" placeholder="Description"/>
         <input #boundStartDateInput class="flatpickrStart vs-flatpickr-start" placeholder="Start Date" type="datetime-local" step="any"/>
-        <input #boundEndDateInput class="flatpickrEnd vs-flatpickr-end" placeholder="End Date" type="datetime-local" step="any"/>
+        <input #boundEndDateInput class="flatpickrEnd vs-flatpickr-end" placeholder="End Date" type="datetime-local" step="any"/> <!-- NOTE: need second flatpickr to do two dates -->
     </form>
     <button class='vs-task-button btn btn-lg btn-primary' (click)="addTask(boundTaskInput, boundStartDateInput, boundEndDateInput, $event);">
         <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
+</div>
+
+<!-- edit modal -->
+<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listModalLabel">Edit Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="task-title" class="form-control-label">Task:</label>
+                        <input #boundModalTitle type="text" class="form-control" id="task-title">
+                    </div>
+                    <div class="form-group">
+                        <label for="start-date" class="form-control-label">Start Date:</label>
+                        <input #boundModalStart class="form-control flatpickrStart" id="start-date" placeholder="Choose Date..." type="datetime-local" step="any"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="end-date" class="form-control-label">End Date:</label>
+                        <input #boundModalEnd class="form-control flatpickrEnd" id="end-date" placeholder="Choose Date..." type="datetime-local" step="any"/>
+                    </div>
+                </form>
+            </div>
+            <div #boundHiddenId class="hidden-id" style="display:none;"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="removeModalValues(boundModalTitle, boundModalStart, boundModalEnd, boundHiddenId);">Close</button>
+                <button type="button" class="btn btn-primary" (click)="updateTask(boundModalTitle, boundModalStart, boundModalEnd, boundHiddenId);">Save</button>
+            </div>
+        </div>
+    </div>
 </div>
