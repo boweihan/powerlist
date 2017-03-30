@@ -263,6 +263,10 @@ export class ListComponent implements OnInit {
             this.taskService.updateTask(id, params).subscribe(
                 task => {
                     this.updateTaskSuperficially(task);
+                    $('#listModal').modal('hide');
+                },
+                err => {
+                    bootbox.alert('Something went wrong :(')
                 }
             )
         } else {
