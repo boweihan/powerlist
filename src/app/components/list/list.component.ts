@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
     ngOnInit() {
         this.initializeUI();
         this.initializeCategories();
-        this.fetchTasks(true);
+        this.fetchTasks(true, null, null);
     }
 
     initializeUI() {
@@ -41,9 +41,9 @@ export class ListComponent implements OnInit {
         $('.js-category-description').toggleClass('active');
     }
 
-    fetchTasks(firstLoad) {
+    fetchTasks(firstLoad, boundCategoryTitle, category) {
         if (!this.selectedCategoryId) {
-            this.fetchHomeTasks(firstLoad);
+            this.fetchHomeTasks(firstLoad, boundCategoryTitle);
         } else {
             let that = this;
             this.taskService.getCategoryTasks(this.selectedCategoryId).subscribe(
@@ -52,12 +52,15 @@ export class ListComponent implements OnInit {
                     for (let i = 0; i < tasks.length; i++) {
                         that.insertIntoTasksObject(tasks[i]);
                     }
+                    if (boundCategoryTitle) {
+                        boundCategoryTitle.textContent = category;
+                    }
                 }
             )
         }
     }
 
-    fetchHomeTasks(firstLoad) {
+    fetchHomeTasks(firstLoad, boundCategoryTitle) {
         let that = this;
         this.taskService.getTasksForUser(localStorage.getItem("user_id")).subscribe(
             tasks => {
@@ -66,6 +69,9 @@ export class ListComponent implements OnInit {
                     that.insertIntoTasksObject(tasks[i]);
                     if (firstLoad) {
                         that.calendarService.appendTaskToCalendar(tasks[i]);
+                    }
+                    if (boundCategoryTitle) {
+                        boundCategoryTitle.textContent = "Home";
                     }
                 }
             }
@@ -169,12 +175,10 @@ export class ListComponent implements OnInit {
     selectCategory(element, boundCategoryTitle, category) {
         if (!category) {
             this.selectedCategoryId = null;
-            this.fetchHomeTasks(false);
-            boundCategoryTitle.textContent = "Home";
+            this.fetchHomeTasks(false, boundCategoryTitle);
         } else {
             this.selectedCategoryId = category.id;
-            this.fetchTasks(false);
-            boundCategoryTitle.textContent = category.name;
+            this.fetchTasks(false, boundCategoryTitle, category.name);
         }
         this.setActiveCategory(element);
     }
@@ -277,7 +281,7 @@ export class ListComponent implements OnInit {
                                 that.categories.splice(i, 1);
                             }
                         }
-                        that.fetchTasks(false);
+                        that.fetchTasks(false, null, null); // this will cause category tasks to load twice
                     }
                 )
             }

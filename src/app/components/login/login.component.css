@@ -1,6 +1,6 @@
 @media (max-width: 768px) {
     .vs-logo {
-        font-size: 30vw;
+        font-size: 25vw;
         color: white;
         margin-top: 20vh;
         margin-left: 10vw;
@@ -10,7 +10,7 @@
 
 @media (min-width: 768px) {
     .vs-logo {
-        font-size: 30vw;
+        font-size: 25vw;
         color: white;
         margin-top: 10vh;
         margin-left: 10vw;
