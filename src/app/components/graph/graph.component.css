@@ -1,6 +1,15 @@
 .graph {
     position: fixed;
-    width: 100vw;
-    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: whitesmoke;
+}
+
+#graph {
+    position: absolute;
+    margin: auto;
+    top: 10vh;
+    bottom: 10vh;
 }
