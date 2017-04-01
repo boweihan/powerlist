@@ -13,29 +13,35 @@
 
 /********************* FullCalendar customization *****************************/
 .fc-toolbar h2 {
-  font-size: 1em;
-  line-height: 40px;
-  font-weight: 700;
+    font-size: 1em;
+    line-height: 40px;
+    font-weight: 700;
+}
+.fc .fc-button-group>* {
+    border-radius: 0;
+}
+.fc .fc-toolbar>*>* {
+    border-radius: 0;
 }
 .fc-button {
-  border: none;
-  background-image: none;
-  text-shadow: none;
-  box-shadow: none;
+    border: none;
+    background-image: none;
+    text-shadow: none;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.16),0 1px 5px 0 rgba(0,0,0,.12);
 }
 .fc-today-button {
-  background: none;
+    background: none;
 }
     .fc-today-button:hover {
-      text-decoration: underline;
+        text-decoration: underline;
     }
 .fc-day-header span {
-  font-weight: normal;
-  font-size: 0.9em;
+    font-weight: normal;
+    font-size: 0.9em;
 }
 hr.fc-divider {
-  padding: 0;
-  border-top: 1px solid black;
+    padding: 0;
+    border-top: 1px solid black;
 }
 /* position of calendar toggles */
 @media (max-width: 768px) {
@@ -64,35 +70,10 @@ hr.fc-divider {
 button:focus {
     outline: none;
 }
-
+.fc-event .fc-content {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.16),0 1px 2px 0 rgba(0,0,0,.12);
+}
 /************************* Flatpickr elements *********************************/
-.vs-flatpickr-start {
-    position: absolute;
-    display: inline-block;
-    text-align: center;
-    width: calc(50% - 20px);
-    bottom: 94px;
-    left: 20px;
-    border: 1px solid #f2f2f2;
-    border-top: none;
-    padding: 5px;
-    font-size: 13px;
-}
-
-.vs-flatpickr-end {
-    position: absolute;
-    display: inline-block;
-    text-align: center;
-    width: calc(50% - 20px);
-    bottom: 94px;
-    right: 20px;
-    border: none;
-    border-bottom: 1px solid #f2f2f2;
-    border-right: 1px solid #f2f2f2;
-    padding: 5px;
-    font-size: 13px;
-}
-
 .flatpickr-calendar {
     z-index: 1050; /* get ontop of bootstrap */
 }

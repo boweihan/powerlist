@@ -166,8 +166,9 @@ export class ListComponent implements OnInit {
         if (!(event.keyCode == 13 || event.type === "click")) {
             return;
         }
-        if(categoryInput.value) {
+        if(!categoryInput.value) {
             bootbox.alert('Please enter a category.');
+            return;
         }
         let category = new Category(null, categoryInput.value,
                                     parseInt(localStorage.getItem("user_id")));

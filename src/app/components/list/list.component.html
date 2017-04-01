@@ -65,9 +65,9 @@
         </table>
     </div>
     <form (keydown)="addTask(boundTaskInput, boundStartDateInput, boundEndDateInput, $event);">
-        <input #boundTaskInput type="text" class="vs-task-input" placeholder="Description"/>
-        <input #boundStartDateInput class="flatpickrStart vs-flatpickr-start" placeholder="Start Date" type="datetime-local" step="any"/>
-        <input #boundEndDateInput class="flatpickrEnd vs-flatpickr-end" placeholder="End Date" type="datetime-local" step="any"/> <!-- NOTE: need second flatpickr to do two dates -->
+        <input #boundTaskInput type="text" class="vs-task-input" placeholder="Add Task"/>
+        <input #boundStartDateInput class="flatpickrStart vs-flatpickr-start vs-date-input" placeholder="&#xf272;" style="font-family: FontAwesome;" type="datetime-local" step="any"/>
+        <input #boundEndDateInput class="flatpickrEnd vs-flatpickr-end vs-date-input" placeholder="&#xf271;" style="font-family: FontAwesome;" type="datetime-local" step="any"/> <!-- NOTE: need second flatpickr to do two dates -->
     </form>
     <button class='vs-task-button btn btn-lg btn-primary' (click)="addTask(boundTaskInput, boundStartDateInput, boundEndDateInput, $event);">
         <i class="fa fa-plus" aria-hidden="true"></i>
