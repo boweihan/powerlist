@@ -29,11 +29,20 @@
     text-shadow: none;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.16),0 1px 5px 0 rgba(0,0,0,.12);
 }
+.fc-state-active {
+    background-color: #000F14;
+    color: white;
+}
+.fc-state-disabled {
+    background-color: #000F14;
+    color: white;
+    opacity: 1;
+    cursor: default;
+}
 .fc-today-button {
-    background: none;
 }
     .fc-today-button:hover {
-        text-decoration: underline;
+        background-color: #000F14;
     }
 .fc-day-header span {
     font-weight: normal;
@@ -76,4 +85,11 @@ button:focus {
 /************************* Flatpickr elements *********************************/
 .flatpickr-calendar {
     z-index: 1050; /* get ontop of bootstrap */
+}
+/************************** Bootstrap overrides *******************************/
+.btn-primary {
+    background-color: #D84D20 !important;
+}
+.btn-default {
+    background-color: #2E2E2E !important;
 }

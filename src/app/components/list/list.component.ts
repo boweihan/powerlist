@@ -301,6 +301,9 @@ export class ListComponent implements OnInit {
                             }
                         }
                         that.fetchTasks(false, null, null); // this will cause category tasks to load twice
+                    },
+                    err => {
+                        bootbox.alert('Unable to delete category that has tasks associated with it.');
                     }
                 )
             }

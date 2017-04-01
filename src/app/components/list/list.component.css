@@ -91,7 +91,6 @@
     bottom: 55px;
     left: 14px;
     width: calc(100% - 38px);
-    background-color: #D84D20;
     border-radius: 0px;
     border: none;
     font-size: 0.8em;
@@ -156,7 +155,7 @@
     }
     .vs-category-inline-input {
         padding-left: 5px;
-        width: calc(100% - 20px);
+        width: calc(100% - 25px);
     }
     .vs-category-inline-container {
         width: calc(100% - 40px);
@@ -218,7 +217,9 @@
     }
     .vs-category-inline-input {
         padding-left: 5px;
-        width: 170px;
+        width: 157px;
+        box-sizing: border-box;
+        height: 1.2rem;
     }
 }
 

@@ -20,19 +20,20 @@ canvas {
     display: block;
     text-align: center;
     margin: auto;
-    margin-top: 6vh;
+    margin-top: 8vh;
     font-weight: 300;
     border: none;
-    background-color: white;
+    border-radius: 0px;
+    background-color: white !important;
     color: black !important;
 }
     .vs-login-button:hover {
-        background-color: #D84D20 !important;
-        color: white !important;
+        background-color: #A1FFFF !important;
         font-weight: 700;
     }
 
 .vs-site-description {
     font-size: 3vh;
+    margin-top: 30px;
     display: block;
 }

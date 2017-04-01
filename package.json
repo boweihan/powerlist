@@ -25,6 +25,7 @@
     "auth0-lock": "^10.10.1",
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
+    "csshake": "^1.5.1",
     "datetimepicker": "^0.1.38",
     "flatpickr": "^2.3.7",
     "font-awesome": "^4.7.0",

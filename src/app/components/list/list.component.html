@@ -13,8 +13,8 @@
                     <i class="fa fa-location-arrow" aria-hidden="true" style="padding-right: 15px; line-height: 1.5em;"></i>
                     <p class="category-{{category.id}}" style="display:inline-block; margin:0; padding:0;">{{category.name}}</p>
                     <span class="category-{{category.id}}-container vs-category-inline-container" style="display:none;">
-                        <input class="category-{{category.id}}-input vs-category-inline-input" (keydown)="updateCategory($event, category.id, boundCategoryTitle);" type="text" maxlength="35"/>
-                        <i class="fa fa-times" (click)="editCategory(category.id)" style="padding-top: 5px;"></i>
+                        <input class="category-{{category.id}}-input vs-category-inline-input" (keydown)="updateCategory($event, category.id, boundCategoryTitle);" (click)="stopPropagation($event);" type="text" maxlength="35"/>
+                        <i class="fa fa-times" (click)="stopPropagation($event); editCategory(category.id)" style="padding-top: 5px; box-shadow: none; background-color: transparent;"></i>
                     </span>
                 </div>
                 <div class="dropdown" style="float: right; line-height: 1.5em; padding: 5px;">
@@ -102,7 +102,7 @@
             </div>
             <div #boundHiddenId class="hidden-id" style="display:none;"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="removeModalValues(boundModalTitle, boundModalStart, boundModalEnd, boundHiddenId);">Close</button>
+                <button type="button" class="btn btn-elegant" data-dismiss="modal" (click)="removeModalValues(boundModalTitle, boundModalStart, boundModalEnd, boundHiddenId);">Close</button>
                 <button type="button" class="btn btn-primary" (click)="updateTask(boundModalTitle, boundModalStart, boundModalEnd, boundHiddenId);">Save</button>
             </div>
         </div>
