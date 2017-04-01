@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit, OnChanges {
 
   constructor(
       private authService: AuthService,
-  ) {
-  }
+  ) {}
 
   ngOnChanges() { }
 

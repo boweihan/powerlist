@@ -13,6 +13,7 @@ import { ListComponent } from './components/list/list.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoginComponent } from './components/login/login.component';
 import { PrivateComponent } from './components/private/private.component';
+import { GraphComponent } from './components/graph/graph.component';
 
 import 'rxjs/Rx';
 
@@ -28,7 +29,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ListComponent,
     CalendarComponent,
     LoginComponent,
-    PrivateComponent
+    PrivateComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,

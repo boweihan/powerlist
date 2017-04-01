@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListComponent } from './components/list/list.component';
+import { GraphComponent } from './components/graph/graph.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './components/main/app.component';
 import { PrivateComponent } from './components/private/private.component';
@@ -20,7 +21,8 @@ const routes: Routes = [
     path: AppRoutes.private,
     component: PrivateComponent,
     children: [
-        { path: 'list', component: ListComponent, outlet: 'aux' }
+        { path: 'list', component: ListComponent, outlet: 'aux' },
+        { path: 'graph', component: GraphComponent, outlet: 'aux' }
     ]
   }
 ];
