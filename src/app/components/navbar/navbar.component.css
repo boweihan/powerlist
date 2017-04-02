@@ -1,6 +1,8 @@
 .navbar {
     padding: 5px 20vw;
     background-color: #000F14 !important;
+    position: relative;
+    z-index: 1000;
 }
 
 .vs-nav-icon {
