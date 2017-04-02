@@ -59,7 +59,8 @@ export class GraphComponent implements OnInit {
                       title: 'download'
                   }
               },
-              right: '10%'
+              right: '10%',
+              top: '25px'
           },
           xAxis: {
               type: 'category',
@@ -71,7 +72,8 @@ export class GraphComponent implements OnInit {
               boundaryGap: [0, '100%'],
               name: 'number of tasks',
               nameRotate: 90,
-              nameLocation: 'middle'
+              nameLocation: 'middle',
+              nameGap: 40
           },
           dataZoom: [{
               type: 'inside',

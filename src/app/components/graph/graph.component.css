@@ -1,15 +1,7 @@
 .graph {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: whitesmoke;
-}
-
-#graph {
     position: absolute;
-    margin: auto;
-    top: 10vh;
+    top: calc(5vh + 45.5px);
     bottom: 10vh;
+    left: 5vw;
+    right: 5vw;
 }
