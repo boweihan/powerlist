@@ -30,6 +30,7 @@ export class ListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.initLoadingModal();
         this.initializeUI();
         this.initializeCategories();
         this.fetchTasks(true, null, null);
@@ -63,8 +64,13 @@ export class ListComponent implements OnInit {
                     if (boundCategoryTitle) {
                         boundCategoryTitle.textContent = category;
                     }
+                    $('.boop').hide();
+                },
+                err => {
+                    bootbox.alert("Server error, you may be disconnected from the internet");
                 }
             )
+            this.showLoadingModalAfterTimeout();
         }
     }
 
@@ -81,9 +87,14 @@ export class ListComponent implements OnInit {
                     if (boundCategoryTitle) {
                         boundCategoryTitle.textContent = "Home";
                     }
+                    $('.boop').hide();
                 }
+            },
+            err => {
+                bootbox.alert("Server error, you may be disconnected from the internet");
             }
-      )
+        )
+        this.showLoadingModalAfterTimeout();
     }
 
     addTask(taskInput, startDateInput, endDateInput, event) {
@@ -328,5 +339,26 @@ export class ListComponent implements OnInit {
 
     removeModalValues(dom1, dom2, dom3, dom4) {
         dom1.value = dom2.value = dom3.value = dom4.value = null; // NOTE: lol
+    }
+
+    initLoadingModal() { // this should be in a parent component
+        $('.boop').loadingModal({
+          position: 'fixed',
+          text: '',
+          color: '#fff',
+          opacity: '0.7',
+          backgroundColor: 'rgb(0,0,0)',
+          animation: 'cubeGrid'
+        });
+    }
+
+    showLoadingModal() {
+        if (this.tasks.length === 0) {
+            $('.boop').show();
+        }
+    }
+
+    showLoadingModalAfterTimeout() {
+        setTimeout(this.showLoadingModal(), 500);
     }
 }
