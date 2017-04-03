@@ -15,9 +15,8 @@
     .list {
         position: relative;
         display: block;
-        padding: 20px;
+        padding: 20px calc(10% + 20px);
         background-color: white;
-        width: 80%;
         margin: auto;
         padding-top: 5vh;
         height: 100vh;

@@ -69,7 +69,7 @@ export class GraphComponent implements OnInit {
         let hashMap = {};
         for (var i = 0, len = tasks.length; i < len; i++) {
             if (hashMap[tasks[i].category.name] === undefined) {
-                hashMap[tasks[i].category.name] = 0;
+                hashMap[tasks[i].category.name] = 1;
             } else {
                 hashMap[tasks[i].category.name] = hashMap[tasks[i].category.name] + 1;
             }
@@ -88,7 +88,7 @@ export class GraphComponent implements OnInit {
 
         var option = {
             title : {
-                text: 'Distribution',
+                text: 'Tasks by Category',
                 x:'center'
             },
             tooltip : {
@@ -96,9 +96,8 @@ export class GraphComponent implements OnInit {
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                top: '20%',
-                left : '65%',
-                orient : 'vertical',
+                top: '13%',
+                orient : 'horizontal',
                 data:legendData
             },
             toolbox: {
@@ -125,15 +124,15 @@ export class GraphComponent implements OnInit {
                     }
                 },
                 right: '10%',
-                top: '20px'
+                top: '20%'
             },
             calculable : true,
             series : [
                 {
-                    name:'Distribution',
+                    name:'Tasks by Category',
                     type:'pie',
                     radius : ['5%', '70%'],
-                    center : ['35%', '50%'],
+                    center : ['50%', '65%'],
                     roseType : 'radius',
                     width: '50%',       // for funnel
                     max: 40,            // for funnel
@@ -163,7 +162,7 @@ export class GraphComponent implements OnInit {
             },
             title: {
                 left: 'center',
-                text: 'Timeline',
+                text: 'Task Timeline',
             },
             toolbox: {
                 feature: {
@@ -182,7 +181,7 @@ export class GraphComponent implements OnInit {
                     }
                 },
                 right: '10%',
-                top: '20px'
+                top: '10%'
             },
             backgroundColor: 'whitesmoke',
             xAxis: {
