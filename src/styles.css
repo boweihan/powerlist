@@ -96,3 +96,7 @@ button:focus {
 .btn-default {
     background-color: #2E2E2E !important;
 }
+/****************************** Bootbox overrides *****************************/
+.bootbox {
+    z-index: 1060;
+}

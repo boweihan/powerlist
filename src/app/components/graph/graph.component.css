@@ -1,7 +1,7 @@
-.graph {
+.down {
     position: absolute;
     top: calc(5vh + 45.5px);
-    bottom: 10vh;
+    bottom: 50vh;
     left: 5vw;
     right: 5vw;
 }
@@ -13,4 +13,12 @@
     left: 0;
     right: 0;
     background-color: whitesmoke;
+}
+
+.up {
+    position: absolute;
+    top: 52vh;
+    bottom: 10vh;
+    left: 5vw;
+    right: 5vw;
 }

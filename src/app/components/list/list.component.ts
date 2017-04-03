@@ -5,6 +5,7 @@ import { CalendarService } from '../../services/calendar-service/calendar.servic
 import { TaskService } from '../../services/task-service/task.service';
 import { CategoryService } from '../../services/category-service/category.service';
 import { Colors } from '../../shared/app-colors';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 declare let $: any;
 declare let flatpickr: any;
@@ -12,7 +13,7 @@ declare let bootbox: any;
 
 @Component({
     selector: 'app-list',
-    providers: [CalendarService, TaskService, CategoryService],
+    providers: [CalendarService, TaskService, CategoryService, AuthService],
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.css']
 })
@@ -26,14 +27,17 @@ export class ListComponent implements OnInit {
     constructor(
         private calendarService: CalendarService,
         private taskService: TaskService,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
-        this.initLoadingModal();
-        this.initializeUI();
-        this.initializeCategories();
-        this.fetchTasks(true, null, null);
+        if (this.authService.isAuthenticated()) { // redirect is done in /private, this just prevents extra loading
+            this.initLoadingModal();
+            this.initializeUI();
+            this.initializeCategories();
+            this.fetchTasks(true, null, null);
+        }
     }
 
     initializeUI() {
