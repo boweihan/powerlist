@@ -59,6 +59,7 @@ export class ListComponent implements OnInit {
             this.fetchHomeTasks(firstLoad, boundCategoryTitle);
         } else {
             let that = this;
+            this.showLoadingModalAfterTimeout();
             this.taskService.getCategoryTasks(this.selectedCategoryId).subscribe(
                 tasks => {
                     that.tasks = []; // javascript garbage collects
@@ -74,12 +75,12 @@ export class ListComponent implements OnInit {
                     bootbox.alert("Server error, you may be disconnected from the internet");
                 }
             )
-            this.showLoadingModalAfterTimeout();
         }
     }
 
     fetchHomeTasks(firstLoad, boundCategoryTitle) {
         let that = this;
+        this.showLoadingModalAfterTimeout();
         this.taskService.getTasksForUser(localStorage.getItem("user_id")).subscribe(
             tasks => {
                 that.tasks = [];
@@ -98,7 +99,6 @@ export class ListComponent implements OnInit {
                 bootbox.alert("Server error, you may be disconnected from the internet");
             }
         )
-        this.showLoadingModalAfterTimeout();
     }
 
     addTask(taskInput, startDateInput, endDateInput, event) {
@@ -357,12 +357,10 @@ export class ListComponent implements OnInit {
     }
 
     showLoadingModal() {
-        if (this.tasks.length === 0) {
-            $('.boop').show();
-        }
+        $('.boop').show();
     }
 
     showLoadingModalAfterTimeout() {
-        setTimeout(this.showLoadingModal(), 500);
+        setTimeout(this.showLoadingModal(), 1000);
     }
 }
