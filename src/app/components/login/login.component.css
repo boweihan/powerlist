@@ -9,6 +9,7 @@ canvas {
 }
 .vs-login {
     position: fixed;
+    background-color: black;
     top: 0;
     left: 0;
     bottom: 0;
@@ -21,15 +22,17 @@ canvas {
     text-align: center;
     margin: auto;
     margin-top: 8vh;
-    font-weight: 300;
+    font-weight: 700;
     border: none;
-    border-radius: 0px;
-    background-color: white !important;
-    color: black !important;
+    box-shadow: none;
+    background: none !important;
+    color: white !important;
 }
     .vs-login-button:hover {
-        background-color: #A1FFFF !important;
-        font-weight: 700;
+        background: none !important;
+        color: yellow !important;
+        transform: scale(1.1);
+        cursor: pointer;
     }
 
 .vs-site-description {
