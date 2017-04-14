@@ -19,11 +19,16 @@ export class LoginComponent implements OnInit, OnChanges {
   ngOnChanges() { }
 
   ngOnInit() {
-      // this.initElectricity();
+      this._initAuthAnimation();
   }
 
-  initElectricity() {
-      // let electricity = new Electricity();
-      // electricity.init();
+  _initAuthAnimation() {
+      setInterval(function() {
+          var elem = $('.js-animate-auth');
+          if (elem.text().indexOf("....") !== -1) {
+              elem.text(elem.text().substring(0, elem.text().length - 4));
+          }
+          elem.text(elem.text() + ".");
+      }, 500)
   }
 }

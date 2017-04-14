@@ -2,5 +2,5 @@
 <div class="vs-login">
   <div class="vs-title-block"><span style='font-size: 10vw;'>PowerList</span><span class='vs-site-description'>A lightweight, <span style="color: yellow">electrifying</span> task scheduler</span></div>
   <button class="btn btn-primary btn-lg vs-login-button" (click)="authService.login()" *ngIf="!authService.isAuthenticated()"><i style="font-size: 10em" class="fa fa-forward" aria-hidden="true"></i></button>
-  <button class="btn btn-primary btn-lg vs-login-button" *ngIf="authService.isAuthenticated()"><i style="font-size: 10em; color: #D84D20;" class="fa fa-forward" aria-hidden="true"></i></button>
+  <button class="btn btn-primary btn-lg vs-login-button js-animate-auth" *ngIf="authService.isAuthenticated()">Waiting for authorization</button>
 </div>
