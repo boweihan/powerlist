@@ -92,8 +92,8 @@ export class ListComponent implements OnInit {
                     if (boundCategoryTitle) {
                         boundCategoryTitle.textContent = "Home";
                     }
-                    $('.boop').hide();
                 }
+                $('.boop').hide();
             },
             err => {
                 bootbox.alert("Server error, you may be disconnected from the internet");
