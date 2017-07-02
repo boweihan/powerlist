@@ -68,10 +68,14 @@ export class GraphComponent implements OnInit {
     constructPieObject(tasks) {
         let hashMap = {};
         for (var i = 0, len = tasks.length; i < len; i++) {
-            if (hashMap[tasks[i].category.name] === undefined) {
-                hashMap[tasks[i].category.name] = 1;
+            if (!tasks[i].category) {
+                hashMap["Uncategorized"] = hashMap["Uncategorized"] ? hashMap["Uncategorized"] + 1 : 1;
             } else {
-                hashMap[tasks[i].category.name] = hashMap[tasks[i].category.name] + 1;
+                if (hashMap[tasks[i].category.name] === undefined) {
+                    hashMap[tasks[i].category.name] = 1;
+                } else {
+                    hashMap[tasks[i].category.name] = hashMap[tasks[i].category.name] + 1;
+                }
             }
         }
         return hashMap;
