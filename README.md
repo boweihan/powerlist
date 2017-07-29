@@ -3,8 +3,6 @@ Personal productivity app that combines various organizational tools for one gre
 
 Check it out at: www.powerlist.pro
 
-I'm currently working on this as a side project. Technologies I will incorporate include:
-
 Front End:
 - Angular 2
 - TypeScript
