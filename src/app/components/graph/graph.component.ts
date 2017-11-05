@@ -256,11 +256,11 @@ export class GraphComponent implements OnInit {
     addDatesToDateArray(startDate, stopDate) { //refactor
         var currentDate = startDate;
         while (currentDate <= stopDate) {
+            let currentMS = currentDate.getTime();
+            this.dateArray.push(currentDate);
             currentDate.setSeconds(0);
             currentDate.setMinutes(0);
             currentDate.setHours(0);
-            this.dateArray.push(currentDate);
-            let currentMS = currentDate.getTime();
             currentDate.setTime(currentMS + 86400000);
         }
     }
