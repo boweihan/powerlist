@@ -9,7 +9,10 @@ canvas {
 }
 .vs-login {
     position: fixed;
-    background-color: black;
+    /*background-color: black;*/
+    background-image: url('../../../assets/bg1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     top: 0;
     left: 0;
     bottom: 0;
